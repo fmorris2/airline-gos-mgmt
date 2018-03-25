@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2015
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirlineDBMS", "AirlineDBMS\AirlineDBMS.csproj", "{21CACC23-98FD-4CD8-96DB-9B222E617C6B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{21CACC23-98FD-4CD8-96DB-9B222E617C6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21CACC23-98FD-4CD8-96DB-9B222E617C6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21CACC23-98FD-4CD8-96DB-9B222E617C6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21CACC23-98FD-4CD8-96DB-9B222E617C6B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D0381D1D-F492-4904-9CAA-5E1C6A6EE3A7}
+	EndGlobalSection
+EndGlobal
