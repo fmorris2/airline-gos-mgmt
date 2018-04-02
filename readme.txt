@@ -21,3 +21,6 @@ PM> Install-Package Prism.Core -Version 7.0.0.396
 --
 Install ControlzEx Package-
 PM> Install-Package ControlzEx -Version 3.0.2.4
+--
+Install Mysql.Data Package-
+PM> Install-Package MySql.Data

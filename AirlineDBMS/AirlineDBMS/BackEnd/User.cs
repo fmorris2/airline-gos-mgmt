@@ -19,6 +19,7 @@ namespace AirlineDBMS.BackEnd
         public static User Load(String username, String password)
         {
             System.Console.WriteLine("Load("+username+","+password+")");
+            System.Console.WriteLine("DB Ping: " + DBManager.Ping());
             return null;
         }
     }

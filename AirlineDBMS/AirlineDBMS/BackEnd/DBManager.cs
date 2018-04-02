@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,5 +32,14 @@ namespace AirlineDBMS.BackEnd
         const string USER = "rwallace";
         const string PASS = "oswego";
         const string DB_NAME = "airline_management";
+        const string CONN_STRING = "Database="+DB_NAME+";Data Source="+HOST+";User Id="+USER+";Password="+PASS;
+
+        public static bool Ping()
+        {
+            MySqlConnection conn = new MySqlConnection(CONN_STRING);
+            conn.Open();
+            return conn.Ping();
+        }
+
     }
 }
