@@ -14,11 +14,11 @@ namespace AirlineDBMS
     /// </summary>
     public partial class App : Application
     {
-        LoginWindow lw = new LoginWindow();
+        MainWindow mw = new MainWindow();
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            lw.DataContext = ViewModels.LoginVM.Instance;
-            lw.Show();
+            mw.DataContext = ViewModels.MainVM.Instance;
+            mw.Show();
         }
     }
 }

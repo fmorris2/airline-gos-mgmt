@@ -12,17 +12,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
+using AirlineDBMS.ViewModels;
 
 namespace AirlineDBMS.Views
 {
     /// <summary>
     /// Interaction logic for LoginWindow.xaml
     /// </summary>
-    public partial class LoginWindow : MetroWindow
+    public partial class LoginWindow : UserControl
     {
         public LoginWindow()
-        {
+        {                
             InitializeComponent();
+            LoginVM viewModel = new LoginVM();
+            this.DataContext = viewModel;
         }
 
         /*

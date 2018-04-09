@@ -12,21 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MahApps.Metro.Controls;
-using AirlineDBMS.ViewModels;
 
 namespace AirlineDBMS.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for BaggageClaimPanel.xaml
     /// </summary>
-    public partial class MainWindow : MetroWindow
+    public partial class BaggageClaimPanel : UserControl
     {
-        public MainWindow()
+        public BaggageClaimPanel()
         {
             InitializeComponent();
-            MainVM viewModel = new MainVM();
-            this.DataContext = viewModel;
         }
     }
 }

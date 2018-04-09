@@ -5,37 +5,20 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace AirlineDBMS.ViewModels
 {
     class LoginVM : INotifyPropertyChanged
     {
         public readonly BackgroundWorker loadWorker = new BackgroundWorker();
-        private static object lockObj = new object();
-        private static volatile LoginVM instance;
 
         #region Constructor/Instance
-        public static LoginVM Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    lock (lockObj)
-                    {
-                        if (instance == null)
-                            instance = new LoginVM();
-                    }
-                }
-                return instance;
-            }
-        }
-
         public LoginVM()
         {
+            LoginCommand = new DelegateCommand(OnLogin, CanLogin);
             loadWorker.DoWork += loadWorker_DoWork;
             loadWorker.RunWorkerCompleted += loadWorker_RunWorkerCompleted;
-            LoginCommand = new DelegateCommand(OnLogin, CanLogin);
         }
 
         private void loadWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -61,16 +44,79 @@ namespace AirlineDBMS.ViewModels
         }
         #endregion
 
+        #region Properties
+        private string username;
+        public string Username
+        {
+            get
+            {
+                return username;
+            }
+            set
+            {
+                if (username != value)
+                {
+                    username = value;
+                    NotifyPropertyChanged("Username");
+                }
+            }
+        }
+
+        private string password;
+        public string Password
+        {
+            get
+            {
+                return password;
+            }
+            set
+            {
+                if (password != value)
+                {
+                    password = value;
+                    NotifyPropertyChanged("Password");
+                }
+            }
+        }
+
+        private Visibility isLoginVisible = Visibility.Visible;
+        public Visibility IsLoginVisible
+        {
+            get
+            {
+                return isLoginVisible;
+            }
+
+            set
+            {
+                if (isLoginVisible != value)
+                {
+                    isLoginVisible = value;
+                    NotifyPropertyChanged("IsLoginVisible");
+                }
+            }
+        }
+        #endregion
+
         #region Commands
 
         /// <summary>
         /// Command for the Load button in Loader Window
         /// </summary>
         public DelegateCommand LoginCommand { get; private set; }
+
         private void OnLogin()
         {
             try
             {
+                // Load could return whether the user is valid or not
+                AirlineDBMS.BackEnd.User.Load(Username, Password);
+                // If valid remove login box
+                if (true)
+                {
+                    IsLoginVisible = Visibility.Collapsed;
+                }
+                
             }
             catch (Exception exc)
             {

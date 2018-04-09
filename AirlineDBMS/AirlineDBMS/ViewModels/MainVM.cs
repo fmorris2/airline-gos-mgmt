@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Prism.Commands;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -32,10 +33,18 @@ namespace AirlineDBMS.ViewModels
 
         public MainVM()
         {
+            RegisterCommands();
             loadWorker.DoWork += loadWorker_DoWork;
             loadWorker.RunWorkerCompleted += loadWorker_RunWorkerCompleted;
         }
 
+        private void RegisterCommands()
+        {
+            BaggageClaimCommand = new DelegateCommand(OnBaggageClaim, CanBaggageClaim);
+        }
+        #endregion
+
+        #region workers
         private void loadWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             throw new NotImplementedException();
@@ -59,5 +68,18 @@ namespace AirlineDBMS.ViewModels
         }
         #endregion
 
+        #region Commands
+        public DelegateCommand BaggageClaimCommand { get; private set; }
+
+        private void OnBaggageClaim()
+        {
+            throw new NotImplementedException();
+        }
+        private bool CanBaggageClaim()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

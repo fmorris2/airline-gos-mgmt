@@ -4,10 +4,49 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:local="clr-namespace:AirlineDBMS.Views"
-        mc:Ignorable="d"
+        xmlns:views="clr-namespace:AirlineDBMS.Views"
+        xmlns:vms="clr-namespace:AirlineDBMS.ViewModels"
+        mc:Ignorable="d" ShowTitleBar="False"
         Title="MainWindow" Height="450" Width="800">
+
     <Grid>
-        
+
+        <!-- Login box -->
+        <views:LoginWindow  Visibility="{Binding IsLoginVisible}" Panel.ZIndex="1"/>
+
+        <!-- Main Stuff -->
+        <Grid Panel.ZIndex="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <!-- Top Menu Bar -->
+            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Baggage Claim" Width="135" Height="50" Command="{Binding BaggageClaimCommand}"
+                        Background="#FF75D6FF" FontSize="16"/>
+                <Button Content="Employee Shift" Width="135" Height="50" Command="{Binding EmployeeShiftCommand}"
+                        Background="#FF75D6FF" FontSize="16"/>
+                <Button Content="Work Order" Width="135" Height="50" Command="{Binding WorkOrderCommand}"
+                        Background="#FF75D6FF" FontSize="16"/>
+                <Button Content="Fuel Order" Width="135" Height="50" Command="{Binding FuelOrderCommand}"
+                        Background="#FF75D6FF" FontSize="16"/>
+                <Button Content="Search" Width="135" Height="50" Command="{Binding SearchCommand}"
+                        Background="#FF75D6FF" FontSize="16"/>
+            </StackPanel>
+            
+            <!-- Side Menu Bar -->
+            
+            <!-- Data Display -->
+            <views:BaseControl />
+
+
+        </Grid>
+
+
     </Grid>
+
 </Controls:MetroWindow>
