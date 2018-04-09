@@ -73,11 +73,12 @@ namespace AirlineDBMS.ViewModels
 
         private void OnBaggageClaim()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
         private bool CanBaggageClaim()
         {
-            throw new NotImplementedException();
+            return true;
+            //throw new NotImplementedException();
         }
 
         #endregion

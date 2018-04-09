@@ -98,6 +98,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\SwitchConverter.cs" />
     <Compile Include="Views\FuelOrderPanel.xaml.cs">
       <DependentUpon>FuelOrderPanel.xaml</DependentUpon>
     </Compile>
