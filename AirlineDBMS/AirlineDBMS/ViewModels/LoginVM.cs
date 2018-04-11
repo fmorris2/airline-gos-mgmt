@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using AirlineDBMS.Models;
+using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -110,11 +111,16 @@ namespace AirlineDBMS.ViewModels
             try
             {
                 // Load could return whether the user is valid or not
-                AirlineDBMS.BackEnd.User.Load(Username, Password);
+                Console.WriteLine("LoginVM#OnLogin()");
+
                 // If valid remove login box
-                if (true)
+                if (AirlineDBMS.Models.User.LoadInstance(Username, Password))
                 {
                     IsLoginVisible = Visibility.Collapsed;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid login credentials - Please try again");
                 }
                 
             }

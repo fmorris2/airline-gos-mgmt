@@ -135,7 +135,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BackEnd\DBManager.cs" />
-    <Compile Include="BackEnd\User.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
     <Compile Include="ViewModels\MainVM.cs" />

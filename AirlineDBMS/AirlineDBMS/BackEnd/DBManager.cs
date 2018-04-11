@@ -34,11 +34,21 @@ namespace AirlineDBMS.BackEnd
         const string DB_NAME = "airline_management";
         const string CONN_STRING = "Database="+DB_NAME+";Data Source="+HOST+";User Id="+USER+";Password="+PASS;
 
-        public static bool Ping()
+        private static MySqlConnection connection;
+
+        public static MySqlDataReader query(String sql)
         {
-            MySqlConnection conn = new MySqlConnection(CONN_STRING);
-            conn.Open();
-            return conn.Ping();
+            Console.WriteLine("DBManager#query("+sql+")");
+            //lazy instantiation of connection
+            if(connection == null)
+            {
+                connection = new MySqlConnection(CONN_STRING);
+                connection.Open();
+                Console.WriteLine("SQL connection established");
+            }
+
+            MySqlCommand command = new MySqlCommand(sql, connection);
+            return command.ExecuteReader();
         }
 
     }
