@@ -22,8 +22,8 @@ namespace AirlineDBMS.Models
 
         private int id;
         private int user_group;
-        public String username;
-        public String password;
+        private String username;
+        private String password;
 
         public User(int id, int user_group, String username, String password)
         {
