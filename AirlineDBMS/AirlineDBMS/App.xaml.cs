@@ -17,7 +17,6 @@ namespace AirlineDBMS
         MainWindow mw = new MainWindow();
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            mw.DataContext = ViewModels.MainVM.Instance;
             mw.Show();
         }
     }

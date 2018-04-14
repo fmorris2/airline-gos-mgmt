@@ -4,12 +4,34 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AirlineDBMS.Views"
+             xmlns:src="clr-namespace:AirlineDBMS.Views"
+             xmlns:conv="clr-namespace:AirlineDBMS.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <!-- Panel Types -->
+
+        <src:EmployeeShiftPanel x:Key="EmployeeShiftPanelProperty" Margin="5" />
+        <src:BaggageClaimPanel x:Key="BaggageClaimPanelProperty" Margin="5" />
+        <src:WorkOrderPanel x:Key="WorkOrderPanelProperty" Margin="5" />
+        <src:FuelOrderPanel x:Key="FuelOrderPanelProperty" Margin="5" />
+        
+        <!-- Panel Selector Based on the button selected
+        <conv:SwitchConverter x:Key="PanelSelectorConverter">
+            <conv:SwitchConverterCase When="AddEmpShift" Then="{StaticResource EmployeeShiftPanelProperty}" />
+            <conv:SwitchConverterCase When="NewBagClaim" Then="{StaticResource BaggageClaimPanelProperty}" />
+            <conv:SwitchConverterCase When="NewWorkOrder" Then="{StaticResource WorkOrderPanelProperty}" />
+            <conv:SwitchConverterCase When="NewFuelOrder" Then="{StaticResource FuelOrderPanelProperty}" />
+        </conv:SwitchConverter>
+        -->
+    </UserControl.Resources>
     <Grid>
         
-        <!-- TODO - setup a switch converter that displays the appropriate panel,
-        based on menu item selected. -->
+        <!-- Panel Types -->
+        <src:BaggageClaimPanel Visibility="{Binding BagClaimVisible}" Margin="5" />
+        <src:EmployeeShiftPanel Visibility="{Binding EmpShiftVisible}" Margin="5" />
+        <src:WorkOrderPanel Visibility="{Binding WorkOrderVisible}" Margin="5" />
+        <src:FuelOrderPanel Visibility="{Binding FuelOrderVisible}" Margin="5" />
             
     </Grid>
 </UserControl>

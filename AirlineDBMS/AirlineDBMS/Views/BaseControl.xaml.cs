@@ -22,6 +22,7 @@ namespace AirlineDBMS.Views
     {
         public BaseControl()
         {
+            this.DataContext = ViewModels.MainVM.Instance;
             InitializeComponent();
         }
     }

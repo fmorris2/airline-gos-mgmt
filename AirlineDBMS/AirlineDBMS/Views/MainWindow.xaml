@@ -6,43 +6,83 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:views="clr-namespace:AirlineDBMS.Views"
         xmlns:vms="clr-namespace:AirlineDBMS.ViewModels"
-        mc:Ignorable="d" ShowTitleBar="False"
-        Title="MainWindow" Height="450" Width="800">
+        mc:Ignorable="d"
+        Height="450" Width="800"
+        Title="AirlineDBMS">
 
     <Grid>
 
-        <!-- Login box -->
+        <!-- Login box 
         <views:LoginWindow  Visibility="{Binding IsLoginVisible}" Panel.ZIndex="1"/>
+-->
 
         <!-- Main Stuff -->
-        <Grid Panel.ZIndex="0">
+        <Grid Panel.ZIndex="0" Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="130"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <!-- Top Menu Bar -->
-            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Content="Baggage Claim" Width="135" Height="50" Command="{Binding BaggageClaimCommand}"
-                        Background="#FF75D6FF" FontSize="16"/>
-                <Button Content="Employee Shift" Width="135" Height="50" Command="{Binding EmployeeShiftCommand}"
-                        Background="#FF75D6FF" FontSize="16"/>
-                <Button Content="Work Order" Width="135" Height="50" Command="{Binding WorkOrderCommand}"
-                        Background="#FF75D6FF" FontSize="16"/>
-                <Button Content="Fuel Order" Width="135" Height="50" Command="{Binding FuelOrderCommand}"
-                        Background="#FF75D6FF" FontSize="16"/>
-                <Button Content="Search" Width="135" Height="50" Command="{Binding SearchCommand}"
-                        Background="#FF75D6FF" FontSize="16"/>
-            </StackPanel>
-            
-            <!-- Side Menu Bar -->
-            
-            <!-- Data Display -->
-            <views:BaseControl />
 
+            <!-- Top Menu Bar -->
+            <!-- Logo -->
+            <Image Grid.Row="0" Grid.Column="0" Height="60" Width="60"
+                   HorizontalAlignment='Left'
+                       Margin="0,0,10,0" Source="../Resources/logo.png" />
+            <!-- Add to DB Options -->
+            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
+                        Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Width" Value="135" />
+                        <Setter Property="Height" Value="60" />
+                        <Setter Property="FontSize" Value="16" />
+                        <Setter Property="Background" Value="Black" />
+                        <Setter Property="Foreground" Value="Gray" />
+                    </Style>
+                </StackPanel.Resources>
+                <Button Command="{Binding AddEmpShiftCommand}">
+                    <TextBlock Text="Add Employee Shift" TextWrapping="Wrap" />
+                </Button>
+                <Button Command="{Binding NewBagClaimCommand}" >
+                    <TextBlock Text="New Baggage Claim" TextWrapping="Wrap" />
+                </Button>
+                <Button Command="{Binding NewWorkOrderCommand}">
+                    <TextBlock Text="New Work Order" TextWrapping="Wrap" />
+                </Button>
+                <Button Command="{Binding NewFuelOrderCommand}">
+                    <TextBlock Text="New Fuel Order" TextWrapping="Wrap" />
+                </Button>
+            </StackPanel>
+            <!-- Search Button -->
+            <Button Grid.Row="0" Grid.Column="1" Width="60" Height="60"
+                Command="{Binding SearchCommand}" Background="Black" HorizontalAlignment="Right">
+                <Image Source="../Resources/search.png" />
+            </Button>
+
+            <!-- Side Menu Bar (Queries?) -->
+            <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,30,0,0" 
+                        Orientation="Vertical" HorizontalAlignment="Left" >
+                <StackPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Width" Value="130" />
+                        <Setter Property="Height" Value="30" />
+                        <Setter Property="FontSize" Value="12" />
+                        <Setter Property="Background" Value="Black" />
+                        <Setter Property="Foreground" Value="Gray" />
+                    </Style>
+                </StackPanel.Resources>
+                <Button Content="Employee Schedule" Command="{Binding EmployeeSchedCommand}" />
+                <Button Content="Baggage Claims" Command="{Binding BagClaimsCommand}"/>
+                <Button Content="Work Orders" Command="{Binding WorkOrdersCommand}"/>
+                <Button Content="Fuel Orders" Command="{Binding FuelOrderCommand}"/>
+            </StackPanel>
+
+            <!-- Data Display -->
+            <views:BaseControl Grid.Row="1" Grid.Column="1" />
 
         </Grid>
 

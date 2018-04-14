@@ -25,7 +25,7 @@ namespace AirlineDBMS.Models
         private String username;
         private String password;
 
-        public User(int id, int user_group, String username, String password)
+        public User(int id, int user_group, string username, string password)
         {
             this.id = id;
             this.user_group = user_group;
@@ -33,7 +33,7 @@ namespace AirlineDBMS.Models
             this.password = password;
         }
 
-        public static User Load(String username, String password)
+        public static User Load(string username, string password)
         {
             User toReturn = null;
 
@@ -48,7 +48,7 @@ namespace AirlineDBMS.Models
             return toReturn;
         }
 
-        public static Boolean LoadInstance(String username, String password)
+        public static bool LoadInstance(string username, string password)
         {
             instance = Load(username, password);
             return instance != null;

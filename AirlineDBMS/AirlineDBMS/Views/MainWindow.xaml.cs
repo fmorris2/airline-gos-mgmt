@@ -24,9 +24,8 @@ namespace AirlineDBMS.Views
     {
         public MainWindow()
         {
+            this.DataContext = MainVM.Instance;
             InitializeComponent();
-            MainVM viewModel = new MainVM();
-            this.DataContext = viewModel;
         }
     }
 }
