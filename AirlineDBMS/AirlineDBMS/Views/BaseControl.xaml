@@ -26,12 +26,12 @@
         -->
     </UserControl.Resources>
     <Grid>
-        
+
         <!-- Panel Types -->
-        <src:BaggageClaimPanel Visibility="{Binding BagClaimVisible}" Margin="5" />
         <src:EmployeeShiftPanel Visibility="{Binding EmpShiftVisible}" Margin="5" />
-        <src:WorkOrderPanel Visibility="{Binding WorkOrderVisible}" Margin="5" />
-        <src:FuelOrderPanel Visibility="{Binding FuelOrderVisible}" Margin="5" />
+        <src:BaggageClaimPanel Visibility="{Binding NewBagClaimVisible}" Margin="5" />
+        <src:WorkOrderPanel Visibility="{Binding NewWorkOrderVisible}" Margin="5" />
+        <src:FuelOrderPanel Visibility="{Binding NewFuelOrderVisible}" Margin="5" />
             
     </Grid>
 </UserControl>

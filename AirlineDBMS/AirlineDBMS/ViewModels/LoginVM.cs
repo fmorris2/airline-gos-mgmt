@@ -12,24 +12,11 @@ namespace AirlineDBMS.ViewModels
 {
     class LoginVM : INotifyPropertyChanged
     {
-        public readonly BackgroundWorker loadWorker = new BackgroundWorker();
 
         #region Constructor/Instance
         public LoginVM()
         {
             LoginCommand = new DelegateCommand(OnLogin, CanLogin);
-            loadWorker.DoWork += loadWorker_DoWork;
-            loadWorker.RunWorkerCompleted += loadWorker_RunWorkerCompleted;
-        }
-
-        private void loadWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void loadWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

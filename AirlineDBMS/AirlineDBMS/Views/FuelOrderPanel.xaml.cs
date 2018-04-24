@@ -24,5 +24,10 @@ namespace AirlineDBMS.Views
         {
             InitializeComponent();
         }
+
+        private void Submit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -24,3 +24,6 @@ PM> Install-Package ControlzEx -Version 3.0.2.4
 --
 Install Mysql.Data Package-
 PM> Install-Package MySql.Data
+--
+Extended WPF Toolkit (datetime picker, etc)
+PM> Extended.Wpf.Toolkit -Version 3.3.0

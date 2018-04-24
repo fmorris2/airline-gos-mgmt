@@ -46,6 +46,11 @@ namespace AirlineDBMS.ViewModels
             NewWorkOrderCommand = new DelegateCommand(OnWorkOrderMenu, CanWorkOrderMenu);
             NewFuelOrderCommand = new DelegateCommand(OnFuelOrderMenu, CanFuelOrderMenu);
 
+            EmployeeSchedCommand = new DelegateCommand(OnEmpSched, CanEmpSched);
+            BagClaimsCommand = new DelegateCommand(ShowBagClaim, CanShowBagClaims);
+            WorkOrdersCommand = new DelegateCommand(ShowWorkOrders, CanShowWorkOrders);
+            FuelOrdersCommand = new DelegateCommand(ShowFuelOrders, CanShowFuelOrders);
+
             SearchCommand = new DelegateCommand(OnSearch, CanSearch);
         }
         #endregion
@@ -76,19 +81,21 @@ namespace AirlineDBMS.ViewModels
 
         #region Properties
 
-        private Visibility bagClaimVisible = Visibility.Collapsed;
-        public Visibility BagClaimVisible
+        #region TopButtons
+
+        private Visibility newBagClaimVisible = Visibility.Collapsed;
+        public Visibility NewBagClaimVisible
         {
             get
             {
-                return bagClaimVisible;
+                return newBagClaimVisible;
             }
             set
             {
-                if (bagClaimVisible != value)
+                if (newBagClaimVisible != value)
                 {
-                    bagClaimVisible = value;
-                    NotifyPropertyChanged("BagClaimVisible");
+                    newBagClaimVisible = value;
+                    NotifyPropertyChanged("NewBagClaimVisible");
                 }
             }
         }
@@ -108,43 +115,141 @@ namespace AirlineDBMS.ViewModels
                 }
             }
         }
-        private Visibility workOrderVisible = Visibility.Collapsed;
-        public Visibility WorkOrderVisible
+        private Visibility newWorkOrderVisible = Visibility.Collapsed;
+        public Visibility NewWorkOrderVisible
         {
             get
             {
-                return workOrderVisible;
+                return newWorkOrderVisible;
             }
             set
             {
-                if (workOrderVisible != value)
+                if (newWorkOrderVisible != value)
                 {
-                    workOrderVisible = value;
-                    NotifyPropertyChanged("WorkOrderVisible");
+                    newWorkOrderVisible = value;
+                    NotifyPropertyChanged("NewWorkOrderVisible");
                 }
             }
         }
-        private Visibility fuelOrderVisible = Visibility.Collapsed;
-        public Visibility FuelOrderVisible
+        private Visibility newFuelOrderVisible = Visibility.Collapsed;
+        public Visibility NewFuelOrderVisible
         {
             get
             {
-                return fuelOrderVisible;
+                return newFuelOrderVisible;
             }
             set
             {
-                if (fuelOrderVisible != value)
+                if (newFuelOrderVisible != value)
                 {
                     // toggle highlight of menu item based on value
-                    fuelOrderVisible = value;
-                    NotifyPropertyChanged("FuelOrderVisible");
+                    newFuelOrderVisible = value;
+                    NotifyPropertyChanged("NewFuelOrderVisible");
+                }
+            }
+        }
+
+        private Visibility searchVisible = Visibility.Collapsed;
+        public Visibility SearchVisible
+        {
+            get
+            {
+                return searchVisible;
+            }
+            set
+            {
+                if (searchVisible != value)
+                {
+                    // toggle highlight of menu item based on value
+                    searchVisible = value;
+                    NotifyPropertyChanged("SearchVisible");
                 }
             }
         }
 
         #endregion
 
+        #region SideButtons
+
+        private Visibility showEmpSchedVisible = Visibility.Collapsed;
+        public Visibility ShowEmpSchedVisible
+        {
+            get
+            {
+                return showEmpSchedVisible;
+            }
+            set
+            {
+                if (showEmpSchedVisible != value)
+                {
+                    // toggle highlight of menu item based on value
+                    showEmpSchedVisible = value;
+                    NotifyPropertyChanged("ShowEmpSchedVisible");
+                }
+            }
+        }
+
+        private Visibility showBagClaimsVisible = Visibility.Collapsed;
+        public Visibility ShowBagClaimsVisible
+        {
+            get
+            {
+                return showBagClaimsVisible;
+            }
+            set
+            {
+                if (showBagClaimsVisible != value)
+                {
+                    // toggle highlight of menu item based on value
+                    showBagClaimsVisible = value;
+                    NotifyPropertyChanged("ShowBagClaimsVisible");
+                }
+            }
+        }
+
+        private Visibility showWorkOrdersVisible = Visibility.Collapsed;
+        public Visibility ShowWorkOrdersVisible
+        {
+            get
+            {
+                return showWorkOrdersVisible;
+            }
+            set
+            {
+                if (showWorkOrdersVisible != value)
+                {
+                    // toggle highlight of menu item based on value
+                    showWorkOrdersVisible = value;
+                    NotifyPropertyChanged("ShowWorkOrdersVisible");
+                }
+            }
+        }
+
+        private Visibility showFuelOrdersVisible = Visibility.Collapsed;
+        public Visibility ShowFuelOrdersVisible
+        {
+            get
+            {
+                return showFuelOrdersVisible;
+            }
+            set
+            {
+                if (showFuelOrdersVisible != value)
+                {
+                    // toggle highlight of menu item based on value
+                    showFuelOrdersVisible = value;
+                    NotifyPropertyChanged("ShowFuelOrdersVisible");
+                }
+            }
+        }
+
+        #endregion
+
+        #endregion
+
         #region Commands
+
+        #region TopButtons
         // Employee Shift menu button select
         public DelegateCommand AddEmpShiftCommand { get; private set; }
 
@@ -194,6 +299,21 @@ namespace AirlineDBMS.ViewModels
         }
 
 
+        // Search button in the corner
+        public DelegateCommand SearchCommand { get; private set; }
+
+        private void OnSearch()
+        {
+            SearchVisible = Visibility.Visible;
+        }
+        private bool CanSearch()
+        {
+            return true;
+        }
+
+        #endregion
+
+        #region Side buttons
         // Display Employee schedule
         public DelegateCommand EmployeeSchedCommand { get; private set; }
 
@@ -223,7 +343,7 @@ namespace AirlineDBMS.ViewModels
 
         private void ShowWorkOrders()
         {
-            ShowMenuItem("ShowWorkOrder");
+            ShowMenuItem("ShowWorkOrders");
         }
         private bool CanShowWorkOrders()
         {
@@ -231,28 +351,19 @@ namespace AirlineDBMS.ViewModels
         }
 
         // Display bag claims
-        public DelegateCommand FuelOrderCommand { get; private set; }
+        public DelegateCommand FuelOrdersCommand { get; private set; }
 
         private void ShowFuelOrders()
         {
-            ShowMenuItem("ShowFuelOrder");
+            ShowMenuItem("ShowFuelOrders");
         }
         private bool CanShowFuelOrders()
         {
             return true;
         }
 
-        // Search button in the corner
-        public DelegateCommand SearchCommand { get; private set; }
+        #endregion
 
-        private void OnSearch()
-        {
-            ShowMenuItem("Search");
-        }
-        private bool CanSearch()
-        {
-            return true;
-        }
         #endregion
 
         #region HelperMethods
@@ -263,58 +374,103 @@ namespace AirlineDBMS.ViewModels
             switch (open)
             {
                 case "NewEmployeeShift":
-                    BagClaimVisible = Visibility.Collapsed;
+                    NewBagClaimVisible = Visibility.Collapsed;
                     EmpShiftVisible = Visibility.Visible;
-                    WorkOrderVisible = Visibility.Collapsed;
-                    FuelOrderVisible = Visibility.Collapsed;
+                    NewWorkOrderVisible = Visibility.Collapsed;
+                    NewFuelOrderVisible = Visibility.Collapsed;
+                    ShowEmpSchedVisible = Visibility.Collapsed;
+                    ShowBagClaimsVisible = Visibility.Collapsed;
+                    ShowWorkOrdersVisible = Visibility.Collapsed;
+                    ShowFuelOrdersVisible = Visibility.Collapsed;
+                    SearchVisible = Visibility.Collapsed;
                     break;
                 case "NewBaggageClaim":
-                    BagClaimVisible = Visibility.Visible;
+                    NewBagClaimVisible = Visibility.Visible;
                     EmpShiftVisible = Visibility.Collapsed;
-                    WorkOrderVisible = Visibility.Collapsed;
-                    FuelOrderVisible = Visibility.Collapsed;
+                    NewWorkOrderVisible = Visibility.Collapsed;
+                    NewFuelOrderVisible = Visibility.Collapsed;
+                    ShowEmpSchedVisible = Visibility.Collapsed;
+                    ShowBagClaimsVisible = Visibility.Collapsed;
+                    ShowWorkOrdersVisible = Visibility.Collapsed;
+                    ShowFuelOrdersVisible = Visibility.Collapsed;
+                    SearchVisible = Visibility.Collapsed;
                     break;
                 case "NewWorkOrder":
-                    BagClaimVisible = Visibility.Collapsed;
+                    NewBagClaimVisible = Visibility.Collapsed;
                     EmpShiftVisible = Visibility.Collapsed;
-                    WorkOrderVisible = Visibility.Visible;
-                    FuelOrderVisible = Visibility.Collapsed;
+                    NewWorkOrderVisible = Visibility.Visible;
+                    NewFuelOrderVisible = Visibility.Collapsed;
+                    ShowEmpSchedVisible = Visibility.Collapsed;
+                    ShowBagClaimsVisible = Visibility.Collapsed;
+                    ShowWorkOrdersVisible = Visibility.Collapsed;
+                    ShowFuelOrdersVisible = Visibility.Collapsed;
+                    SearchVisible = Visibility.Collapsed;
                     break;
                 case "NewFuelOrder":
-                    BagClaimVisible = Visibility.Collapsed;
+                    NewBagClaimVisible = Visibility.Collapsed;
                     EmpShiftVisible = Visibility.Collapsed;
-                    WorkOrderVisible = Visibility.Collapsed;
-                    FuelOrderVisible = Visibility.Visible;
+                    NewWorkOrderVisible = Visibility.Collapsed;
+                    NewFuelOrderVisible = Visibility.Visible;
+                    ShowEmpSchedVisible = Visibility.Collapsed;
+                    ShowBagClaimsVisible = Visibility.Collapsed;
+                    ShowWorkOrdersVisible = Visibility.Collapsed;
+                    ShowFuelOrdersVisible = Visibility.Collapsed;
+                    SearchVisible = Visibility.Collapsed;
                     break;
-                case "EmployeeSched":
-                    BagClaimVisible = Visibility.Collapsed;
-                    EmpShiftVisible = Visibility.Visible;
-                    WorkOrderVisible = Visibility.Collapsed;
-                    FuelOrderVisible = Visibility.Collapsed;
-                    break;
-                case "BagClaims":
-                    BagClaimVisible = Visibility.Visible;
+                case "ShowEmpSched":
+                    NewBagClaimVisible = Visibility.Collapsed;
                     EmpShiftVisible = Visibility.Collapsed;
-                    WorkOrderVisible = Visibility.Collapsed;
-                    FuelOrderVisible = Visibility.Collapsed;
+                    NewWorkOrderVisible = Visibility.Collapsed;
+                    NewFuelOrderVisible = Visibility.Collapsed;
+                    ShowEmpSchedVisible = Visibility.Visible;
+                    ShowBagClaimsVisible = Visibility.Collapsed;
+                    ShowWorkOrdersVisible = Visibility.Collapsed;
+                    ShowFuelOrdersVisible = Visibility.Collapsed;
+                    SearchVisible = Visibility.Collapsed;
                     break;
-                case "WorkOrders":
-                    BagClaimVisible = Visibility.Collapsed;
+                case "ShowBagClaims":
+                    NewBagClaimVisible = Visibility.Collapsed;
                     EmpShiftVisible = Visibility.Collapsed;
-                    WorkOrderVisible = Visibility.Visible;
-                    FuelOrderVisible = Visibility.Collapsed;
+                    NewWorkOrderVisible = Visibility.Collapsed;
+                    NewFuelOrderVisible = Visibility.Collapsed;
+                    ShowEmpSchedVisible = Visibility.Collapsed;
+                    ShowBagClaimsVisible = Visibility.Visible;
+                    ShowWorkOrdersVisible = Visibility.Collapsed;
+                    ShowFuelOrdersVisible = Visibility.Collapsed;
+                    SearchVisible = Visibility.Collapsed;
                     break;
-                case "FuelOrders":
-                    BagClaimVisible = Visibility.Collapsed;
+                case "ShowWorkOrders":
+                    NewBagClaimVisible = Visibility.Collapsed;
                     EmpShiftVisible = Visibility.Collapsed;
-                    WorkOrderVisible = Visibility.Collapsed;
-                    FuelOrderVisible = Visibility.Visible;
+                    NewWorkOrderVisible = Visibility.Collapsed;
+                    NewFuelOrderVisible = Visibility.Collapsed;
+                    ShowEmpSchedVisible = Visibility.Collapsed;
+                    ShowBagClaimsVisible = Visibility.Collapsed;
+                    ShowWorkOrdersVisible = Visibility.Visible;
+                    ShowFuelOrdersVisible = Visibility.Collapsed;
+                    SearchVisible = Visibility.Collapsed;
+                    break;
+                case "ShowFuelOrders":
+                    NewBagClaimVisible = Visibility.Collapsed;
+                    EmpShiftVisible = Visibility.Collapsed;
+                    NewWorkOrderVisible = Visibility.Collapsed;
+                    NewFuelOrderVisible = Visibility.Collapsed;
+                    ShowEmpSchedVisible = Visibility.Collapsed;
+                    ShowBagClaimsVisible = Visibility.Collapsed;
+                    ShowWorkOrdersVisible = Visibility.Collapsed;
+                    ShowFuelOrdersVisible = Visibility.Visible;
+                    SearchVisible = Visibility.Collapsed;
                     break;
                 case "Search":
-                    BagClaimVisible = Visibility.Collapsed;
+                    NewBagClaimVisible = Visibility.Collapsed;
                     EmpShiftVisible = Visibility.Collapsed;
-                    WorkOrderVisible = Visibility.Collapsed;
-                    FuelOrderVisible = Visibility.Collapsed;
+                    NewWorkOrderVisible = Visibility.Collapsed;
+                    NewFuelOrderVisible = Visibility.Collapsed;
+                    ShowEmpSchedVisible = Visibility.Collapsed;
+                    ShowBagClaimsVisible = Visibility.Collapsed;
+                    ShowWorkOrdersVisible = Visibility.Collapsed;
+                    ShowFuelOrdersVisible = Visibility.Collapsed;
+                    SearchVisible = Visibility.Visible;
                     break;
                 default:
                     break;

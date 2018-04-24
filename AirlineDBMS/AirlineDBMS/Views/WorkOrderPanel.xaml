@@ -4,9 +4,43 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AirlineDBMS.Views"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Label FontSize="24" FontWeight="Bold" Foreground="White"> Work Order </Label>
+    <Grid Width="300">
+        <Grid.Resources>
+            <Style TargetType="StackPanel">
+                <Setter Property="Margin" Value="5" />
+            </Style>
+
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="200" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" FontSize="24"  Grid.ColumnSpan="2"
+               FontWeight="Bold" Foreground="White">New Work Order</Label>
+
+        <Label Grid.Row="1" Grid.Column="0" Margin="5" HorizontalAlignment="Right"
+               FontSize="12" Foreground="Gray">Equipment:</Label>
+        <ComboBox Grid.Row="1" Grid.Column="1" Margin="5"
+                 ItemsSource="{Binding EquipmentID}" />
+
+        <Label Grid.Row="2" Grid.Column="0" Margin="5" HorizontalAlignment="Right"
+               FontSize="12" Foreground="Gray">Description:</Label>
+        <TextBox Grid.Row="2" Grid.Column="1" Margin="5" Height="50"
+                 Text="{Binding Description}" />
+
+        <Button Grid.Row="4" Grid.Column="1" Margin="5" Width="100" HorizontalAlignment="Right">Submit</Button>
+
     </Grid>
 </UserControl>
