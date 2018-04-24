@@ -1,21 +1,30 @@
-﻿<Controls:MetroWindow x:Class="AirlineDBMS.Views.MainWindow"
+﻿<controls:MetroWindow x:Class="AirlineDBMS.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:views="clr-namespace:AirlineDBMS.Views"
         xmlns:vms="clr-namespace:AirlineDBMS.ViewModels"
         mc:Ignorable="d"
         Height="550" Width="1000"
         Title="AirlineDBMS">
 
-    <Grid>
+    <controls:MetroWindow.Resources>
+        <DataTemplate x:Key="FlyoutHeaderTemplate">
+            <TextBlock FontSize="20" FontWeight="Bold" HorizontalAlignment="Left">Status Messages</TextBlock>
+        </DataTemplate>
 
-        <!-- Login box 
+        <DropShadowEffect x:Key="StatusButtonEffect" ShadowDepth="0" BlurRadius="40"
+                          Color="LightBlue"/> 
+
+    </controls:MetroWindow.Resources>
+
+    <Grid>
+        <!-- Login box (unchecked for testing)
         <views:LoginWindow  Visibility="{Binding IsLoginVisible}" Panel.ZIndex="1"/>
 -->
-
+        
         <!-- Main Stuff -->
         <Grid Panel.ZIndex="0" Margin="5">
             <Grid.RowDefinitions>
@@ -62,10 +71,26 @@
                     <TextBlock Text="New Fuel Order" />
                 </Button>
             </StackPanel>
-            <!-- Search Button -->
+            
+            <!-- Status Button -->
             <Button Grid.Row="0" Grid.Column="1" Width="60" Height="60"
-                Command="{Binding SearchCommand}" Background="Black" HorizontalAlignment="Right">
-                <Image Source="../Resources/search.png" />
+                Command="{Binding StatusCommand}" Background="Black" HorizontalAlignment="Right">
+
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding NewMsg}" Value="True">
+                                <Setter Property="Effect" Value="{StaticResource StatusButtonEffect}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding NewMsg}" Value="False">
+                                <Setter Property="Effect" Value="{x:Null}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                
+                <Image Source="../Resources/info.png" />
+
             </Button>
 
             <!-- Side Menu Bar (Queries?) -->
@@ -97,10 +122,20 @@
 
             <!-- Data Display -->
             <views:BaseControl Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="25"/>
+            <!-- Status Flyout -->
+            <controls:FlyoutsControl Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5">
+                <controls:Flyout  x:Name="flyoutStatus" Position="Right" Width="300" Height="200" 
+                                  HeaderTemplate="{StaticResource FlyoutHeaderTemplate}"
+                                  IsOpen="{Binding OpenFlyout}" CloseButtonVisibility="Collapsed">
+                    <ScrollViewer Margin="10" VerticalScrollBarVisibility="Auto" Height="190">
+                        <ListBox ItemsSource="{Binding StatusItems}" Background="DarkGray" />
+                    </ScrollViewer>
+                </controls:Flyout>
+            </controls:FlyoutsControl>
 
         </Grid>
 
 
     </Grid>
 
-</Controls:MetroWindow>
+</controls:MetroWindow>

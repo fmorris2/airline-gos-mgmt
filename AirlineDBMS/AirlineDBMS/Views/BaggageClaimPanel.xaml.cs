@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,11 +25,31 @@ namespace AirlineDBMS.Views
         public BaggageClaimPanel()
         {
             InitializeComponent();
+
+            // List of available bags
+            cbBagID.ItemsSource = GetAvailableBags();
+
+            // List of delivery methods
+            cbDeliveryMethod.ItemsSource = new ObservableCollection<string>
+            {
+                "Air", "Ground"
+            };
+
+            // List of possible status'
+            cbCurrentStatus.ItemsSource = new ObservableCollection<string>
+            {
+                "In Transit"
+            };
+        }
+
+        private IEnumerable GetAvailableBags()
+        {
+            return null;
         }
 
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
-
+            // Check all fields were filled in
         }
     }
 }

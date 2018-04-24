@@ -1,9 +1,11 @@
 ﻿using Prism.Commands;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -51,7 +53,7 @@ namespace AirlineDBMS.ViewModels
             WorkOrdersCommand = new DelegateCommand(ShowWorkOrders, CanShowWorkOrders);
             FuelOrdersCommand = new DelegateCommand(ShowFuelOrders, CanShowFuelOrders);
 
-            SearchCommand = new DelegateCommand(OnSearch, CanSearch);
+            StatusCommand = new DelegateCommand(OnStatus, CanStatus);
         }
         #endregion
 
@@ -299,16 +301,68 @@ namespace AirlineDBMS.ViewModels
         }
 
 
-        // Search button in the corner
-        public DelegateCommand SearchCommand { get; private set; }
+        // Status button in the corner
+        public DelegateCommand StatusCommand { get; private set; }
 
-        private void OnSearch()
+        private void OnStatus()
         {
-            SearchVisible = Visibility.Visible;
+            // Open flyout
+            OpenFlyout = !OpenFlyout;
+            // Set button color back to normal
+            NewMsg = false;
         }
-        private bool CanSearch()
+        private bool CanStatus()
         {
             return true;
+        }
+
+        private bool openFlyout = false;
+        public bool OpenFlyout
+        {
+            get { return openFlyout; }
+            set
+            {
+                if (openFlyout != value)
+                {
+                    openFlyout = value;
+                    NotifyPropertyChanged("OpenFlyout");
+                }
+            }
+        }
+
+        private ObservableCollection<string> statusItems;
+        public ObservableCollection<string> StatusItems
+        {
+            get
+            {
+                if (statusItems == null)
+                {
+                    statusItems = new ObservableCollection<string>();
+                }
+                return statusItems;
+            }
+            set
+            {
+                if (statusItems != value)
+                {
+                    statusItems = value;
+                    NotifyPropertyChanged("StatusItems");
+                }
+            }
+        }
+
+        private bool newMsg = false;
+        public bool NewMsg
+        {
+            get { return newMsg; }
+            set
+            {
+                if (newMsg != value)
+                {
+                    newMsg = value;
+                    NotifyPropertyChanged("NewMsg");
+                }
+            }
         }
 
         #endregion
@@ -367,6 +421,23 @@ namespace AirlineDBMS.ViewModels
         #endregion
 
         #region HelperMethods
+
+        // Add to the status box
+        public void AddMessage(string msg)
+        {
+            // Add item to status box
+            statusItems.Add(msg);
+            // Notify user by changing button color
+            NewMsg = true;
+        }
+        
+        // Background thread that opens the status message flyout for a few seconds
+        private Thread FlyoutOpenCloseTimer = new Thread(() =>
+        {
+            MainVM.Instance.OpenFlyout = true;
+            System.Threading.Thread.Sleep(3000);
+            MainVM.Instance.OpenFlyout = false;
+        });
 
         // Show a certain menu when it is clicked
         private void ShowMenuItem(string open)
