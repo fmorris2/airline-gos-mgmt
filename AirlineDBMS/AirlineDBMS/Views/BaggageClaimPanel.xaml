@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:AirlineDBMS.Views"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Width="300">
+    <Grid Width="350">
         <Grid.Resources>
             <Style TargetType="StackPanel">
                 <Setter Property="Margin" Value="5" />
