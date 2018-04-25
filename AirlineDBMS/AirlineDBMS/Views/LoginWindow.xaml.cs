@@ -44,10 +44,10 @@ namespace AirlineDBMS.Views
             viewModel.Username = textBox.Text;
         }
 
-        public void Password_Changed(object sender, TextChangedEventArgs e)
+        public void Password_Changed(object sender, RoutedEventArgs e)
         {
-            var textBox = sender as TextBox;
-            viewModel.Password = textBox.Text;
+            var textBox = sender as PasswordBox;
+            viewModel.Password = textBox.Password;
         }
     }
 }
