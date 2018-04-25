@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace AirlineDBMS.ViewModels
 {
@@ -25,10 +26,7 @@ namespace AirlineDBMS.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(string str)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(str));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(str));
         }
         #endregion
 
@@ -98,11 +96,12 @@ namespace AirlineDBMS.ViewModels
             try
             {
                 // Load could return whether the user is valid or not
-                Console.WriteLine("LoginVM#OnLogin()");
+                Console.WriteLine("LoginVM#OnLogin(), username: " + username + ", password: " + password);
 
                 // If valid remove login box
-                if (AirlineDBMS.Models.User.LoadInstance(Username, Password))
+                if (User.LoadInstance(username, password))
                 {
+                    Console.WriteLine("Successful login!");
                     IsLoginVisible = Visibility.Collapsed;
                 }
                 else

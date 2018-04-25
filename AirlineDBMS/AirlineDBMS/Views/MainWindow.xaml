@@ -21,9 +21,9 @@
     </controls:MetroWindow.Resources>
 
     <Grid>
-        <!-- Login box (unchecked for testing)
+        <!--Login box -->
         <views:LoginWindow  Visibility="{Binding IsLoginVisible}" Panel.ZIndex="1"/>
--->
+
         
         <!-- Main Stuff -->
         <Grid Panel.ZIndex="0" Margin="5">

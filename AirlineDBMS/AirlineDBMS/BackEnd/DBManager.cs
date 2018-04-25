@@ -36,19 +36,22 @@ namespace AirlineDBMS.BackEnd
 
         private static MySqlConnection connection;
 
-        public static MySqlDataReader query(String sql)
+        /**
+         * This is the primary method we'll use to execute queries on the DB.
+         * It simply returns a MySqlDataReader object with the results of the
+         * query
+         */
+        public static MySqlDataReader Query(String sql)
         {
             Console.WriteLine("DBManager#query("+sql+")");
-            //lazy instantiation of connection
-            if(connection == null)
-            {
-                connection = new MySqlConnection(CONN_STRING);
-                connection.Open();
-                Console.WriteLine("SQL connection established");
-            }
-
             MySqlCommand command = new MySqlCommand(sql, connection);
             return command.ExecuteReader();
+        }
+
+        public static void Initialize()
+        {
+            connection = new MySqlConnection(CONN_STRING);
+            connection.Open();
         }
 
     }

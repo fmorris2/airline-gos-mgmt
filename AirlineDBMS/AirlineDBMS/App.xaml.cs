@@ -1,4 +1,5 @@
-﻿using AirlineDBMS.Views;
+﻿using AirlineDBMS.BackEnd;
+using AirlineDBMS.Views;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -17,6 +18,7 @@ namespace AirlineDBMS
         MainWindow mw = new MainWindow();
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            DBManager.Initialize();
             mw.Show();
         }
     }

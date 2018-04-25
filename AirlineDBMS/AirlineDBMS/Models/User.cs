@@ -37,7 +37,7 @@ namespace AirlineDBMS.Models
         {
             User toReturn = null;
 
-            MySqlDataReader result = DBManager.query("SELECT * FROM `user` WHERE LOWER(`username`)='" + username.ToLower() 
+            MySqlDataReader result = DBManager.Query("SELECT * FROM `user` WHERE LOWER(`username`)='" + username.ToLower() 
                 + "' AND LOWER(`password`)='" + password.ToLower() + "'");
             if (result.Read())
             {

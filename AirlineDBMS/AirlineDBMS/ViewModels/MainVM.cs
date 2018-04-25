@@ -16,6 +16,7 @@ namespace AirlineDBMS.ViewModels
         public readonly BackgroundWorker loadWorker = new BackgroundWorker();
         private static object lockObj = new object();
         private static volatile MainVM instance;
+        private static Thread statusFlyoutThread = null;
 
         #region Constructor/Instance
         public static MainVM Instance
@@ -306,10 +307,13 @@ namespace AirlineDBMS.ViewModels
 
         private void OnStatus()
         {
+            Console.WriteLine("MainVM.cs#OnStatus()");
             // Open flyout
             OpenFlyout = !OpenFlyout;
             // Set button color back to normal
             NewMsg = false;
+
+            FlyoutOpenCloseTimer.Start();
         }
         private bool CanStatus()
         {
@@ -434,6 +438,7 @@ namespace AirlineDBMS.ViewModels
         // Background thread that opens the status message flyout for a few seconds
         private Thread FlyoutOpenCloseTimer = new Thread(() =>
         {
+            Console.WriteLine("FlyoutOpenCloseTimer Thread Started!");
             MainVM.Instance.OpenFlyout = true;
             System.Threading.Thread.Sleep(3000);
             MainVM.Instance.OpenFlyout = false;
