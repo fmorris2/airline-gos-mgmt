@@ -32,9 +32,9 @@
                FontWeight="Bold" Foreground="White">New Baggage Claim</Label>
 
         <Label Grid.Row="1" Grid.Column="0" Margin="5" HorizontalAlignment="Right"
-               FontSize="12" Foreground="Gray">Customer Name:</Label>
-        <ComboBox Grid.Row="1" Grid.Column="1" Margin="5"
-                 Name="cbBagID" />
+               FontSize="12" Foreground="Gray">Bag ID:</Label>
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="5"
+                 Name="cbBagID" PreviewTextInput="NumberValidationTextBox" />
 
         <Label Grid.Row="2" Grid.Column="0" Margin="5" HorizontalAlignment="Right"
                FontSize="12" Foreground="Gray">Delivery Method:</Label>
