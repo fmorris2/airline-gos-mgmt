@@ -38,7 +38,7 @@ namespace AirlineDBMS.Views
             // List of possible status'
             cbCurrentStatus.ItemsSource = new ObservableCollection<string>
             {
-                "In Transit"
+                "In Transit", "Delivered", "Waiting"
             };
         }
 

@@ -66,8 +66,8 @@ namespace AirlineDBMS.Views
         }
 
         private void Submit_Click(object sender, RoutedEventArgs e)
-        {
-
+        {   
+            Console.WriteLine("Submit Employee Shift: EmpId: " + EmpID + ", startDate: " + StartDate + ", endDate: " + EndDate);
         }
     }
 }

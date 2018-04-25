@@ -43,16 +43,15 @@ namespace AirlineDBMS.BackEnd
          */
         public static MySqlDataReader Query(String sql)
         {
+            if(connection is null)
+            {
+                connection = new MySqlConnection(CONN_STRING);
+                connection.Open();
+            }
+
             Console.WriteLine("DBManager#query("+sql+")");
             MySqlCommand command = new MySqlCommand(sql, connection);
             return command.ExecuteReader();
         }
-
-        public static void Initialize()
-        {
-            connection = new MySqlConnection(CONN_STRING);
-            connection.Open();
-        }
-
     }
 }

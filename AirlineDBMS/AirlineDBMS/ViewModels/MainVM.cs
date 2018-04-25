@@ -312,9 +312,8 @@ namespace AirlineDBMS.ViewModels
             OpenFlyout = !OpenFlyout;
             // Set button color back to normal
             NewMsg = false;
-
-            FlyoutOpenCloseTimer.Start();
         }
+
         private bool CanStatus()
         {
             return true;

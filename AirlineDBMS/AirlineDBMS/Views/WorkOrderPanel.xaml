@@ -32,7 +32,7 @@
 
         <Label Grid.Row="1" Grid.Column="0" Margin="5" HorizontalAlignment="Right"
                FontSize="12" Foreground="Gray">Equipment:</Label>
-        <ComboBox Grid.Row="1" Grid.Column="1" Margin="5"
+        <ComboBox Grid.Row="1" Grid.Column="1" Margin="5" Name="equipmentBox"
                  ItemsSource="{Binding EquipmentID}" />
 
         <Label Grid.Row="2" Grid.Column="0" Margin="5" HorizontalAlignment="Right"

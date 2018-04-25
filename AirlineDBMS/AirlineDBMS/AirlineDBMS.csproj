@@ -118,6 +118,7 @@
     </ApplicationDefinition>
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\SwitchConverter.cs" />
+    <Compile Include="Models\Equipment.cs" />
     <Compile Include="Views\FuelOrderPanel.xaml.cs">
       <DependentUpon>FuelOrderPanel.xaml</DependentUpon>
     </Compile>

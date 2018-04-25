@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AirlineDBMS.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,8 @@ namespace AirlineDBMS.Views
         public WorkOrderPanel()
         {
             InitializeComponent();
+            Equipment.LoadEquipment();
+            equipmentBox.ItemsSource = Equipment.loadedEquipment;
         }
     }
 }
