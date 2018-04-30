@@ -15,8 +15,8 @@ namespace AirlineDBMS.ViewModels
     {
         public readonly BackgroundWorker loadWorker = new BackgroundWorker();
         private static object lockObj = new object();
+        private static object statusObj = new object();
         private static volatile MainVM instance;
-        private static Thread statusFlyoutThread = null;
 
         #region Constructor/Instance
         public static MainVM Instance
@@ -308,6 +308,16 @@ namespace AirlineDBMS.ViewModels
         private void OnStatus()
         {
             Console.WriteLine("MainVM.cs#OnStatus()");
+            // Update flag to block timers from closing
+            // If flyout is closed set flag
+            if (!OpenFlyout)
+            {
+                ManuallyOpened = true;
+            }
+            else
+            {
+                ManuallyOpened = false;
+            }
             // Open flyout
             OpenFlyout = !OpenFlyout;
             // Set button color back to normal
@@ -325,10 +335,13 @@ namespace AirlineDBMS.ViewModels
             get { return openFlyout; }
             set
             {
-                if (openFlyout != value)
+                lock (statusObj)
                 {
-                    openFlyout = value;
-                    NotifyPropertyChanged("OpenFlyout");
+                    if (openFlyout != value)
+                    {
+                        openFlyout = value;
+                        NotifyPropertyChanged("OpenFlyout");
+                    }
                 }
             }
         }
@@ -429,19 +442,71 @@ namespace AirlineDBMS.ViewModels
         public void AddMessage(string msg)
         {
             // Add item to status box
-            statusItems.Add(msg);
+            statusItems.Insert(0, msg);
             // Notify user by changing button color
             NewMsg = true;
+            StatusId++;
+            Task.Run(() =>
+               FlyoutOpenCloseTimer()
+            );
         }
-        
+        // Flag to reset a timer for the flyout
+        private int statusId = 0;
+        private int StatusId
+        {
+            get
+            {
+                lock (statusObj)
+                {
+                    return statusId;
+                }
+            }
+            set
+            {
+                lock (statusObj)
+                {
+                    if (statusId != value)
+                    {
+                        statusId = value;
+                    }
+                }
+            }
+        }
+        // Flag to keep flyout open if was opened manually
+        private bool manuallyOpened = false;
+        private bool ManuallyOpened
+        {
+            get
+            {
+                lock (statusObj)
+                {
+                    return manuallyOpened;
+                }
+            }
+            set
+            {
+                lock (statusObj)
+                {
+                    if (manuallyOpened != value)
+                    {
+                        manuallyOpened = value;
+                    }
+                }
+            }
+        }
         // Background thread that opens the status message flyout for a few seconds
-        private Thread FlyoutOpenCloseTimer = new Thread(() =>
+        private void FlyoutOpenCloseTimer()
         {
             Console.WriteLine("FlyoutOpenCloseTimer Thread Started!");
             MainVM.Instance.OpenFlyout = true;
+
+            int currentStatus = StatusId;
             System.Threading.Thread.Sleep(3000);
-            MainVM.Instance.OpenFlyout = false;
-        });
+            if (currentStatus == StatusId && !ManuallyOpened)
+            {
+                MainVM.Instance.OpenFlyout = false;
+            }
+        }
 
         // Show a certain menu when it is clicked
         private void ShowMenuItem(string open)

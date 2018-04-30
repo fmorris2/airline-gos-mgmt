@@ -15,6 +15,7 @@
     <Border Background="#BF000000" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid  Height="250" Width="250" VerticalAlignment="Center" HorizontalAlignment="Center" Background="#FF1F1F1F">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Height="200" Width="200">
+                
                 <TextBlock Foreground="#FFE7E7E7" FontSize="16">Username:</TextBlock>
                 <TextBox x:Name="usernameField" TextChanged="Username_Changed" />
 

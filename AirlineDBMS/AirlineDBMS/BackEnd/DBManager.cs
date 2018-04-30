@@ -43,7 +43,7 @@ namespace AirlineDBMS.BackEnd
          */
         public static MySqlDataReader Query(String sql)
         {
-            if(connection is null)
+            if(connection == null)
             {
                 connection = new MySqlConnection(CONN_STRING);
                 connection.Open();

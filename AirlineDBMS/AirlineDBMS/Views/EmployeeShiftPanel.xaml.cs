@@ -65,8 +65,10 @@ namespace AirlineDBMS.Views
             }
         }
 
+        // $ sign before a string allows you to use {variablename} for display
         private void Submit_Click(object sender, RoutedEventArgs e)
-        {   
+        {
+            ViewModels.MainVM.Instance.AddMessage($"Employee \"{tbEmployeeID.Text}\" shift has been updated.");
             Console.WriteLine("Submit Employee Shift: EmpId: " + EmpID + ", startDate: " + StartDate + ", endDate: " + EndDate);
         }
     }

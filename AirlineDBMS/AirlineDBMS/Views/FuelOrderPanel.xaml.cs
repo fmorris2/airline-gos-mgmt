@@ -27,7 +27,7 @@ namespace AirlineDBMS.Views
 
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
-
+            ViewModels.MainVM.Instance.AddMessage($"Fuel order created for Flight ID {cbFlightID.SelectedValue}.");
         }
     }
 }

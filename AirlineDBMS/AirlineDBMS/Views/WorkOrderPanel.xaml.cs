@@ -25,7 +25,12 @@ namespace AirlineDBMS.Views
         {
             InitializeComponent();
             Equipment.LoadEquipment();
-            equipmentBox.ItemsSource = Equipment.loadedEquipment;
+            cbEquipment.ItemsSource = Equipment.loadedEquipment;
+        }
+
+        private void Search_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModels.MainVM.Instance.AddMessage($"Work Order created for Equipment ID \"{cbEquipment.Text}\".");
         }
     }
 }

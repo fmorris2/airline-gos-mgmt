@@ -49,6 +49,7 @@ namespace AirlineDBMS.Views
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
             // Check all fields were filled in
+            ViewModels.MainVM.Instance.AddMessage($"Claim for BagID \"{cbBagID.Text}\" has been created.");
         }
     }
 }
