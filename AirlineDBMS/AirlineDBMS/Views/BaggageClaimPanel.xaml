@@ -41,7 +41,7 @@
         <ComboBox Grid.Row="2" Grid.Column="1" Margin="5"
                  Name="cbDeliveryMethod" />
 
-        <Button Grid.Row="3" Grid.Column="1" Margin="5" Width="100" HorizontalAlignment="Right"
+        <Button Grid.Row="5" Grid.Column="1" Margin="5" Width="100" HorizontalAlignment="Right"
                 Click="Submit_Click">Submit</Button>
 
     </Grid>
