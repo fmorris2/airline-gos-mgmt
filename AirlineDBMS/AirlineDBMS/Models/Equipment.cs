@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AirlineDBMS.Models
 {
-    class Equipment
+    public class Equipment
     {
         public static List<Equipment> loadedEquipment;
 
@@ -36,6 +36,16 @@ namespace AirlineDBMS.Models
 
             result.Close();
             Console.WriteLine("Loaded " + loadedEquipment.Count + " pieces of equipment");
+        }
+
+        public int GetId()
+        {
+            return id;
+        }
+
+        public String GetName()
+        {
+            return name;
         }
 
         override public string ToString()

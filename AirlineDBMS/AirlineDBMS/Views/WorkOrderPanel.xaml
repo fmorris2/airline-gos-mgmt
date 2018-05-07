@@ -33,14 +33,14 @@
         <Label Grid.Row="1" Grid.Column="0" Margin="5" HorizontalAlignment="Right"
                FontSize="12" Foreground="Gray">Equipment:</Label>
         <ComboBox Grid.Row="1" Grid.Column="1" Margin="5" Name="cbEquipment"
-                 ItemsSource="{Binding EquipmentID}" />
+                 SelectedItem="{Binding SelectedEquipment}" />
 
         <Label Grid.Row="2" Grid.Column="0" Margin="5" HorizontalAlignment="Right"
                FontSize="12" Foreground="Gray">Description:</Label>
-        <TextBox Grid.Row="2" Grid.Column="1" Margin="5" Height="50"
+        <TextBox Grid.Row="2" Grid.Column="1" Margin="5" Height="50" Name="issueDescBox"
                  Text="{Binding Description}" />
 
-        <Button Grid.Row="4" Grid.Column="1" Margin="5" Width="100" HorizontalAlignment="Right" Click="Search_Click">Submit</Button>
+        <Button Grid.Row="4" Grid.Column="1" Margin="5" Width="100" HorizontalAlignment="Right" Click="Submit_Click">Submit</Button>
 
     </Grid>
 </UserControl>
