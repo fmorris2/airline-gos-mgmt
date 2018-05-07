@@ -47,7 +47,7 @@
                  Minimum="0" Maximum="200" Increment="5" Width="50"
                  Text="{Binding Amount}" />
 
-        <Button Grid.Row="5" Grid.Column="1" Margin="5" Width="100" HorizontalAlignment="Right"
+        <Button Grid.Row="4" Grid.Column="1" Margin="5" Width="100" HorizontalAlignment="Right"
                 Click="Submit_Click">Submit</Button>
 
     </Grid>

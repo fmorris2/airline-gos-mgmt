@@ -40,7 +40,7 @@
         <xctk:DateTimePicker Name="dateSelector" 
                Grid.Row="2" Grid.Column="1" Margin="5"/>
 
-        <Button Grid.Row="4" Grid.Column="1" Margin="5" Width="100" HorizontalAlignment="Right" Click="Submit_Click">Submit</Button>
+        <Button Grid.Row="3" Grid.Column="1" Margin="5" Width="100" HorizontalAlignment="Right" Click="Submit_Click">Submit</Button>
 
     </Grid>
 </UserControl>

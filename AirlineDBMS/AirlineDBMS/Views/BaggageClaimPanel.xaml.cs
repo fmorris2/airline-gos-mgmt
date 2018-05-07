@@ -32,12 +32,6 @@ namespace AirlineDBMS.Views
             {
                 "Air", "Ground"
             };
-
-            // List of possible status'
-            cbCurrentStatus.ItemsSource = new ObservableCollection<string>
-            {
-                "In Transit", "Delivered", "Waiting"
-            };
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
