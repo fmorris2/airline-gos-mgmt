@@ -25,6 +25,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
@@ -42,7 +43,7 @@
         <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" FontSize="12" Foreground="Gray" Margin="5">Shift End:</Label>
         <xctk:DateTimePicker Name="shiftEndSelector" Format="ShortTime" Grid.Row="4" Grid.Column="1" Margin="5"/>
 
-        <Button Grid.Row="5" Grid.Column="1" HorizontalAlignment="Right" Margin="5" Width="100" Click="Submit_Click">Submit</Button>
+        <Button Grid.Row="6" Grid.Column="1" HorizontalAlignment="Right" Margin="5" Width="100" Click="Submit_Click">Submit</Button>
 
     </Grid>
 </UserControl>
