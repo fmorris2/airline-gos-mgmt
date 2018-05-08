@@ -51,7 +51,7 @@ namespace AirlineDBMS.Views
             {
                 ViewModels.MainVM.Instance.AddMessage("Please select a delivery method for the claim of bag " + cbBagID.Text);
             }
-            else //input is clean
+            else //something is at least entered for each of the required fields
             {
                 int bag_id = -1;
                 Boolean parse_success = Int32.TryParse(cbBagID.Text, out bag_id);
