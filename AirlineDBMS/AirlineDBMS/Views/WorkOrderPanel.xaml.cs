@@ -56,6 +56,8 @@ namespace AirlineDBMS.Views
             {
                 ViewModels.MainVM.Instance.AddMessage("Failed to create work order for " + cbEquipment.Text + ": Internal error");
             }
+
+            result.Close();
         }
     }
 }
