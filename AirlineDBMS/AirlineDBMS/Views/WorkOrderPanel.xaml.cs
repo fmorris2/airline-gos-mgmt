@@ -2,19 +2,8 @@
 using AirlineDBMS.Models;
 using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AirlineDBMS.Views
 {
@@ -46,21 +35,26 @@ namespace AirlineDBMS.Views
             }
             else
             {
-                DateTime today = DateTime.Today;
-                String formattedDateTime = today.ToString("yyyyMMdd");
+                InsertWorkOrderIntoDB(selected_equipment, issue_desc);
+            }
+        }
 
-                MySqlDataReader result = DBManager.Query("INSERT INTO `work_order`(equipment_id,issue_desc,request_date)" +
-                    " VALUES("+selected_equipment.GetId()+",'"+issue_desc+"','"+formattedDateTime+"')");
+        private void InsertWorkOrderIntoDB(Equipment selected_equipment, String issue_desc)
+        {
+            DateTime today = DateTime.Today;
+            String formattedDateTime = today.ToString("yyyyMMdd");
 
-                if(result.RecordsAffected > 0)
-                {
-                    ViewModels.MainVM.Instance.AddMessage("Successfully created work order for " + cbEquipment.Text + ": "
-                        + "\""+issue_desc+"\"");
-                }
-                else
-                {
-                    ViewModels.MainVM.Instance.AddMessage("Failed to create work order for " + cbEquipment.Text + ": Internal error");
-                }
+            MySqlDataReader result = DBManager.Query("INSERT INTO `work_order`(equipment_id,issue_desc,request_date)" +
+                " VALUES(" + selected_equipment.GetId() + ",'" + issue_desc + "','" + formattedDateTime + "')");
+
+            if (result.RecordsAffected > 0)
+            {
+                ViewModels.MainVM.Instance.AddMessage("Successfully created work order for " + cbEquipment.Text + ": "
+                    + "\"" + issue_desc + "\"");
+            }
+            else
+            {
+                ViewModels.MainVM.Instance.AddMessage("Failed to create work order for " + cbEquipment.Text + ": Internal error");
             }
         }
     }
