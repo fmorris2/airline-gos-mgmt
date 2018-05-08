@@ -53,8 +53,13 @@ namespace AirlineDBMS.Views
             }
             else //input is clean
             {
-                int bag_id = Int32.Parse(cbBagID.Text);
-                if(BagCanBeClaimed(bag_id))
+                int bag_id = -1;
+                Boolean parse_success = Int32.TryParse(cbBagID.Text, out bag_id);
+                if(!parse_success)
+                {
+                    ViewModels.MainVM.Instance.AddMessage("Please enter a valid 32 bit integer in the bag id field");
+                }
+                else if(BagCanBeClaimed(bag_id))
                 {
                     AddBagClaimToDB(bag_id, (DeliveryMethod)cbDeliveryMethod.SelectedValue);
                 }
