@@ -32,7 +32,7 @@ namespace AirlineDBMS.BackEnd
         const string USER = "rwallace";
         const string PASS = "oswego";
         const string DB_NAME = "airline_management";
-        const string CONN_STRING = "Database="+DB_NAME+";Data Source="+HOST+";User Id="+USER+";Password="+PASS;
+        const string CONN_STRING = "Database="+DB_NAME+";Data Source="+HOST+";User Id="+USER+";Password="+PASS+";SslMode=none";
 
         private static MySqlConnection connection;
 
