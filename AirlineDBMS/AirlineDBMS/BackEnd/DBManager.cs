@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -52,6 +53,25 @@ namespace AirlineDBMS.BackEnd
             Console.WriteLine("DBManager#query("+sql+")");
             MySqlCommand command = new MySqlCommand(sql, connection);
             return command.ExecuteReader();
+        }
+
+        // For displaying table data
+        public static DataView GetTableData(String sql)
+        {
+            if (connection == null)
+            {
+                connection = new MySqlConnection(CONN_STRING);
+                connection.Open();
+            }
+
+            DataTable dt = new DataTable();
+
+            using (MySqlCommand cmdSel = new MySqlCommand(sql, connection))
+            using (MySqlDataAdapter da = new MySqlDataAdapter(cmdSel))
+                da.Fill(dt);
+ 
+
+            return dt.DefaultView;
         }
     }
 }

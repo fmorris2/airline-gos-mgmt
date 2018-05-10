@@ -112,6 +112,7 @@ namespace AirlineDBMS.ViewModels
             }
             catch (Exception exc)
             {
+                Console.WriteLine(exc.StackTrace);
             }
         }
         private bool CanLogin()

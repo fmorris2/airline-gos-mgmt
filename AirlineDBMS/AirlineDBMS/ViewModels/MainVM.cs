@@ -1,8 +1,11 @@
-﻿using Prism.Commands;
+﻿using AirlineDBMS.BackEnd;
+using MySql.Data.MySqlClient;
+using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -13,10 +16,10 @@ namespace AirlineDBMS.ViewModels
 {
     class MainVM : INotifyPropertyChanged
     {
-        public readonly BackgroundWorker loadWorker = new BackgroundWorker();
         private static object lockObj = new object();
         private static object statusObj = new object();
         private static volatile MainVM instance;
+        private MySqlDataAdapter mySqlDataAdapter;
 
         #region Constructor/Instance
         public static MainVM Instance
@@ -38,8 +41,6 @@ namespace AirlineDBMS.ViewModels
         public MainVM()
         {
             RegisterCommands();
-            loadWorker.DoWork += loadWorker_DoWork;
-            loadWorker.RunWorkerCompleted += loadWorker_RunWorkerCompleted;
         }
 
         private void RegisterCommands()
@@ -56,19 +57,6 @@ namespace AirlineDBMS.ViewModels
 
             StatusCommand = new DelegateCommand(OnStatus, CanStatus);
         }
-        #endregion
-
-        #region workers
-        private void loadWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void loadWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         #endregion
 
         #region INotifyPropertyChanged
@@ -148,100 +136,6 @@ namespace AirlineDBMS.ViewModels
                     // toggle highlight of menu item based on value
                     newFuelOrderVisible = value;
                     NotifyPropertyChanged("NewFuelOrderVisible");
-                }
-            }
-        }
-
-        private Visibility searchVisible = Visibility.Collapsed;
-        public Visibility SearchVisible
-        {
-            get
-            {
-                return searchVisible;
-            }
-            set
-            {
-                if (searchVisible != value)
-                {
-                    // toggle highlight of menu item based on value
-                    searchVisible = value;
-                    NotifyPropertyChanged("SearchVisible");
-                }
-            }
-        }
-
-        #endregion
-
-        #region SideButtons
-
-        private Visibility showEmpSchedVisible = Visibility.Collapsed;
-        public Visibility ShowEmpSchedVisible
-        {
-            get
-            {
-                return showEmpSchedVisible;
-            }
-            set
-            {
-                if (showEmpSchedVisible != value)
-                {
-                    // toggle highlight of menu item based on value
-                    showEmpSchedVisible = value;
-                    NotifyPropertyChanged("ShowEmpSchedVisible");
-                }
-            }
-        }
-
-        private Visibility showBagClaimsVisible = Visibility.Collapsed;
-        public Visibility ShowBagClaimsVisible
-        {
-            get
-            {
-                return showBagClaimsVisible;
-            }
-            set
-            {
-                if (showBagClaimsVisible != value)
-                {
-                    // toggle highlight of menu item based on value
-                    showBagClaimsVisible = value;
-                    NotifyPropertyChanged("ShowBagClaimsVisible");
-                }
-            }
-        }
-
-        private Visibility showWorkOrdersVisible = Visibility.Collapsed;
-        public Visibility ShowWorkOrdersVisible
-        {
-            get
-            {
-                return showWorkOrdersVisible;
-            }
-            set
-            {
-                if (showWorkOrdersVisible != value)
-                {
-                    // toggle highlight of menu item based on value
-                    showWorkOrdersVisible = value;
-                    NotifyPropertyChanged("ShowWorkOrdersVisible");
-                }
-            }
-        }
-
-        private Visibility showFuelOrdersVisible = Visibility.Collapsed;
-        public Visibility ShowFuelOrdersVisible
-        {
-            get
-            {
-                return showFuelOrdersVisible;
-            }
-            set
-            {
-                if (showFuelOrdersVisible != value)
-                {
-                    // toggle highlight of menu item based on value
-                    showFuelOrdersVisible = value;
-                    NotifyPropertyChanged("ShowFuelOrdersVisible");
                 }
             }
         }
@@ -389,7 +283,20 @@ namespace AirlineDBMS.ViewModels
 
         private void OnEmpSched()
         {
-            ShowMenuItem("ShowEmpSched");
+            // Get all the table data as a dataview
+            DataView result = DBManager.GetTableData("SELECT * FROM `equipment` LIMIT 100");
+
+            // If we got something toss it in the DataGrid
+            if(result != null && result.Count > 0)
+            {
+                QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
+                QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
+                ShowMenuItem("ShowQueryDisplay");
+            }
+            else
+            {
+                AddMessage("Query results are empty.");
+            }
         }
         private bool CanEmpSched()
         {
@@ -401,7 +308,20 @@ namespace AirlineDBMS.ViewModels
 
         private void ShowBagClaim()
         {
-            ShowMenuItem("ShowBagClaims");
+            // Get all the table data as a dataview
+            DataView result = DBManager.GetTableData("SELECT * FROM `baggage_claim` LIMIT 100");
+
+            // If we got something toss it in the DataGrid
+            if (result != null && result.Count > 0)
+            {
+                QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
+                QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
+                ShowMenuItem("ShowQueryDisplay");
+            }
+            else
+            {
+                AddMessage("Query results are empty.");
+            }
         }
         private bool CanShowBagClaims()
         {
@@ -413,7 +333,20 @@ namespace AirlineDBMS.ViewModels
 
         private void ShowWorkOrders()
         {
-            ShowMenuItem("ShowWorkOrders");
+            // Get all the table data as a dataview
+            DataView result = DBManager.GetTableData("SELECT * FROM `work_order` LIMIT 100");
+
+            // If we got something toss it in the DataGrid
+            if (result != null && result.Count > 0)
+            {
+                QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
+                QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
+                ShowMenuItem("ShowQueryDisplay");
+            }
+            else
+            {
+                AddMessage("Query results are empty.");
+            }
         }
         private bool CanShowWorkOrders()
         {
@@ -425,7 +358,20 @@ namespace AirlineDBMS.ViewModels
 
         private void ShowFuelOrders()
         {
-            ShowMenuItem("ShowFuelOrders");
+            // Get all the table data as a dataview
+            DataView result = DBManager.GetTableData("SELECT * FROM `fuel_order` LIMIT 100");
+
+            // If we got something toss it in the DataGrid
+            if (result != null && result.Count > 0)
+            {
+                QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
+                QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
+                ShowMenuItem("ShowQueryDisplay");
+            }
+            else
+            {
+                AddMessage("Query results are empty.");
+            }
         }
         private bool CanShowFuelOrders()
         {
@@ -518,99 +464,35 @@ namespace AirlineDBMS.ViewModels
                     EmpShiftVisible = Visibility.Visible;
                     NewWorkOrderVisible = Visibility.Collapsed;
                     NewFuelOrderVisible = Visibility.Collapsed;
-                    ShowEmpSchedVisible = Visibility.Collapsed;
-                    ShowBagClaimsVisible = Visibility.Collapsed;
-                    ShowWorkOrdersVisible = Visibility.Collapsed;
-                    ShowFuelOrdersVisible = Visibility.Collapsed;
-                    SearchVisible = Visibility.Collapsed;
+                    QueryDisplayVM.Instance.QueryDisplayVisible = Visibility.Collapsed;
                     break;
                 case "NewBaggageClaim":
                     NewBagClaimVisible = Visibility.Visible;
                     EmpShiftVisible = Visibility.Collapsed;
                     NewWorkOrderVisible = Visibility.Collapsed;
                     NewFuelOrderVisible = Visibility.Collapsed;
-                    ShowEmpSchedVisible = Visibility.Collapsed;
-                    ShowBagClaimsVisible = Visibility.Collapsed;
-                    ShowWorkOrdersVisible = Visibility.Collapsed;
-                    ShowFuelOrdersVisible = Visibility.Collapsed;
-                    SearchVisible = Visibility.Collapsed;
+                    QueryDisplayVM.Instance.QueryDisplayVisible = Visibility.Collapsed;
                     break;
                 case "NewWorkOrder":
                     NewBagClaimVisible = Visibility.Collapsed;
                     EmpShiftVisible = Visibility.Collapsed;
                     NewWorkOrderVisible = Visibility.Visible;
                     NewFuelOrderVisible = Visibility.Collapsed;
-                    ShowEmpSchedVisible = Visibility.Collapsed;
-                    ShowBagClaimsVisible = Visibility.Collapsed;
-                    ShowWorkOrdersVisible = Visibility.Collapsed;
-                    ShowFuelOrdersVisible = Visibility.Collapsed;
-                    SearchVisible = Visibility.Collapsed;
+                    QueryDisplayVM.Instance.QueryDisplayVisible = Visibility.Collapsed;
                     break;
                 case "NewFuelOrder":
                     NewBagClaimVisible = Visibility.Collapsed;
                     EmpShiftVisible = Visibility.Collapsed;
                     NewWorkOrderVisible = Visibility.Collapsed;
                     NewFuelOrderVisible = Visibility.Visible;
-                    ShowEmpSchedVisible = Visibility.Collapsed;
-                    ShowBagClaimsVisible = Visibility.Collapsed;
-                    ShowWorkOrdersVisible = Visibility.Collapsed;
-                    ShowFuelOrdersVisible = Visibility.Collapsed;
-                    SearchVisible = Visibility.Collapsed;
+                    QueryDisplayVM.Instance.QueryDisplayVisible = Visibility.Collapsed;
                     break;
-                case "ShowEmpSched":
+                case "ShowQueryDisplay":
                     NewBagClaimVisible = Visibility.Collapsed;
                     EmpShiftVisible = Visibility.Collapsed;
                     NewWorkOrderVisible = Visibility.Collapsed;
                     NewFuelOrderVisible = Visibility.Collapsed;
-                    ShowEmpSchedVisible = Visibility.Visible;
-                    ShowBagClaimsVisible = Visibility.Collapsed;
-                    ShowWorkOrdersVisible = Visibility.Collapsed;
-                    ShowFuelOrdersVisible = Visibility.Collapsed;
-                    SearchVisible = Visibility.Collapsed;
-                    break;
-                case "ShowBagClaims":
-                    NewBagClaimVisible = Visibility.Collapsed;
-                    EmpShiftVisible = Visibility.Collapsed;
-                    NewWorkOrderVisible = Visibility.Collapsed;
-                    NewFuelOrderVisible = Visibility.Collapsed;
-                    ShowEmpSchedVisible = Visibility.Collapsed;
-                    ShowBagClaimsVisible = Visibility.Visible;
-                    ShowWorkOrdersVisible = Visibility.Collapsed;
-                    ShowFuelOrdersVisible = Visibility.Collapsed;
-                    SearchVisible = Visibility.Collapsed;
-                    break;
-                case "ShowWorkOrders":
-                    NewBagClaimVisible = Visibility.Collapsed;
-                    EmpShiftVisible = Visibility.Collapsed;
-                    NewWorkOrderVisible = Visibility.Collapsed;
-                    NewFuelOrderVisible = Visibility.Collapsed;
-                    ShowEmpSchedVisible = Visibility.Collapsed;
-                    ShowBagClaimsVisible = Visibility.Collapsed;
-                    ShowWorkOrdersVisible = Visibility.Visible;
-                    ShowFuelOrdersVisible = Visibility.Collapsed;
-                    SearchVisible = Visibility.Collapsed;
-                    break;
-                case "ShowFuelOrders":
-                    NewBagClaimVisible = Visibility.Collapsed;
-                    EmpShiftVisible = Visibility.Collapsed;
-                    NewWorkOrderVisible = Visibility.Collapsed;
-                    NewFuelOrderVisible = Visibility.Collapsed;
-                    ShowEmpSchedVisible = Visibility.Collapsed;
-                    ShowBagClaimsVisible = Visibility.Collapsed;
-                    ShowWorkOrdersVisible = Visibility.Collapsed;
-                    ShowFuelOrdersVisible = Visibility.Visible;
-                    SearchVisible = Visibility.Collapsed;
-                    break;
-                case "Search":
-                    NewBagClaimVisible = Visibility.Collapsed;
-                    EmpShiftVisible = Visibility.Collapsed;
-                    NewWorkOrderVisible = Visibility.Collapsed;
-                    NewFuelOrderVisible = Visibility.Collapsed;
-                    ShowEmpSchedVisible = Visibility.Collapsed;
-                    ShowBagClaimsVisible = Visibility.Collapsed;
-                    ShowWorkOrdersVisible = Visibility.Collapsed;
-                    ShowFuelOrdersVisible = Visibility.Collapsed;
-                    SearchVisible = Visibility.Visible;
+                    QueryDisplayVM.Instance.QueryDisplayVisible = Visibility.Visible;
                     break;
                 default:
                     break;
