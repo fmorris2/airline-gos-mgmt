@@ -106,14 +106,26 @@
                         <Setter Property="HorizontalContentAlignment" Value="Left" />
                     </Style>
                 </StackPanel.Resources>
+                <Button Command="{Binding EmployeesCommand}">
+                    <TextBlock Text="Employees" />
+                </Button>
                 <Button Command="{Binding EmployeeSchedCommand}">
                     <TextBlock Text="Employee Schedule" />
+                </Button>
+                <Button Command="{Binding BagsCommand}">
+                    <TextBlock Text="Bags" />
                 </Button>
                 <Button Command="{Binding BagClaimsCommand}">
                     <TextBlock Text="Baggage Claims" />
                 </Button>
+                <Button Command="{Binding EquipmentCommand}">
+                    <TextBlock Text="Equipment" />
+                </Button>
                 <Button Command="{Binding WorkOrdersCommand}">
                     <TextBlock Text="Work Orders" />
+                </Button>
+                <Button Command="{Binding FlightsCommand}">
+                    <TextBlock Text="Flights" />
                 </Button>
                 <Button Command="{Binding FuelOrdersCommand}">
                     <TextBlock Text="Fuel Orders" />

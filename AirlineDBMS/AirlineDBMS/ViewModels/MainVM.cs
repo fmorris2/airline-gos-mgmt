@@ -50,9 +50,13 @@ namespace AirlineDBMS.ViewModels
             NewWorkOrderCommand = new DelegateCommand(OnWorkOrderMenu, CanWorkOrderMenu);
             NewFuelOrderCommand = new DelegateCommand(OnFuelOrderMenu, CanFuelOrderMenu);
 
+            EmployeesCommand = new DelegateCommand(ShowEmployees, CanShowEmployees);
             EmployeeSchedCommand = new DelegateCommand(OnEmpSched, CanEmpSched);
+            BagsCommand = new DelegateCommand(ShowBags, CanShowBags);
             BagClaimsCommand = new DelegateCommand(ShowBagClaim, CanShowBagClaims);
+            EquipmentCommand = new DelegateCommand(ShowEquipment, CanShowEquipment);
             WorkOrdersCommand = new DelegateCommand(ShowWorkOrders, CanShowWorkOrders);
+            FlightsCommand = new DelegateCommand(ShowFlights, CanShowFlights);
             FuelOrdersCommand = new DelegateCommand(ShowFuelOrders, CanShowFuelOrders);
 
             StatusCommand = new DelegateCommand(OnStatus, CanStatus);
@@ -278,6 +282,31 @@ namespace AirlineDBMS.ViewModels
         #endregion
 
         #region Side buttons
+        // Display employee table
+        public DelegateCommand EmployeesCommand { get; private set; }
+
+        private void ShowEmployees()
+        {
+            // Get all the table data as a dataview
+            DataView result = DBManager.GetTableData("SELECT * FROM `employee` LIMIT 100");
+
+            // If we got something toss it in the DataGrid
+            if (result != null && result.Count > 0)
+            {
+                QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
+                QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
+                ShowMenuItem("ShowQueryDisplay");
+            }
+            else
+            {
+                AddMessage("Query results are empty.");
+            }
+        }
+        private bool CanShowEmployees()
+        {
+            return true;
+        }
+
         // Display Employee schedule
         public DelegateCommand EmployeeSchedCommand { get; private set; }
 
@@ -299,6 +328,31 @@ namespace AirlineDBMS.ViewModels
             }
         }
         private bool CanEmpSched()
+        {
+            return true;
+        }
+
+        // Display bag table
+        public DelegateCommand BagsCommand { get; private set; }
+
+        private void ShowBags()
+        {
+            // Get all the table data as a dataview
+            DataView result = DBManager.GetTableData("SELECT * FROM `bag` LIMIT 100");
+
+            // If we got something toss it in the DataGrid
+            if (result != null && result.Count > 0)
+            {
+                QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
+                QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
+                ShowMenuItem("ShowQueryDisplay");
+            }
+            else
+            {
+                AddMessage("Query results are empty.");
+            }
+        }
+        private bool CanShowBags()
         {
             return true;
         }
@@ -328,7 +382,32 @@ namespace AirlineDBMS.ViewModels
             return true;
         }
 
-        // Display bag claims
+        // Display Equipment table
+        public DelegateCommand EquipmentCommand { get; private set; }
+
+        private void ShowEquipment()
+        {
+            // Get all the table data as a dataview
+            DataView result = DBManager.GetTableData("SELECT * FROM `equipment` LIMIT 100");
+
+            // If we got something toss it in the DataGrid
+            if (result != null && result.Count > 0)
+            {
+                QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
+                QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
+                ShowMenuItem("ShowQueryDisplay");
+            }
+            else
+            {
+                AddMessage("Query results are empty.");
+            }
+        }
+        private bool CanShowEquipment()
+        {
+            return true;
+        }
+
+        // Display Work Order table
         public DelegateCommand WorkOrdersCommand { get; private set; }
 
         private void ShowWorkOrders()
@@ -353,7 +432,32 @@ namespace AirlineDBMS.ViewModels
             return true;
         }
 
-        // Display bag claims
+        // Display Flight table
+        public DelegateCommand FlightsCommand { get; private set; }
+
+        private void ShowFlights()
+        {
+            // Get all the table data as a dataview
+            DataView result = DBManager.GetTableData("SELECT * FROM `flight` LIMIT 100");
+
+            // If we got something toss it in the DataGrid
+            if (result != null && result.Count > 0)
+            {
+                QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
+                QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
+                ShowMenuItem("ShowQueryDisplay");
+            }
+            else
+            {
+                AddMessage("Query results are empty.");
+            }
+        }
+        private bool CanShowFlights()
+        {
+            return true;
+        }
+
+        // Display Fuel Orders table
         public DelegateCommand FuelOrdersCommand { get; private set; }
 
         private void ShowFuelOrders()
