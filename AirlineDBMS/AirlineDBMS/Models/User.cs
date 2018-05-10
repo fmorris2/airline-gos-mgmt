@@ -22,17 +22,19 @@ namespace AirlineDBMS.Models
         public static User instance = null;
 
         private int id;
-        private int user_group;
+        private Group user_group;
         private String username;
         private String password;
 
         public User(int id, int user_group, string username, string password)
         {
             this.id = id;
-            this.user_group = user_group;
+            this.user_group = (Group)user_group;
             this.username = username;
             this.password = password;
         }
+
+        public enum Group {Auditor, Employee, Manager}
 
         public static User Load(string username, string password)
         {
@@ -61,6 +63,11 @@ namespace AirlineDBMS.Models
         {
             instance = Load(username, password);
             return instance != null;
+        }
+
+        public Group GetUserGroup()
+        {
+            return user_group;
         }
     }
 }

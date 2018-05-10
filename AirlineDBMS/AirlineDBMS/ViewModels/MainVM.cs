@@ -1,14 +1,11 @@
 ﻿using AirlineDBMS.BackEnd;
+using AirlineDBMS.Models;
 using MySql.Data.MySqlClient;
 using Prism.Commands;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -157,7 +154,7 @@ namespace AirlineDBMS.ViewModels
 
         private void OnEmpShiftMenu()
         {
-            ShowMenuItem("NewEmployeeShift");
+            ShowView(MenuItem.new_emp_shift);
         }
         private bool CanEmpShiftMenu()
         {
@@ -169,7 +166,7 @@ namespace AirlineDBMS.ViewModels
 
         private void OnBagClaimMenu()
         {
-            ShowMenuItem("NewBaggageClaim");
+            ShowView(MenuItem.new_bag_claim);
         }
         private bool CanBagClaimMenu()
         {
@@ -181,7 +178,7 @@ namespace AirlineDBMS.ViewModels
 
         private void OnWorkOrderMenu()
         {
-            ShowMenuItem("NewWorkOrder");
+            ShowView(MenuItem.new_work_order);
         }
         private bool CanWorkOrderMenu()
         {
@@ -193,7 +190,7 @@ namespace AirlineDBMS.ViewModels
 
         private void OnFuelOrderMenu()
         {
-            ShowMenuItem("NewFuelOrder");
+            ShowView(MenuItem.new_fuel_order);
         }
         private bool CanFuelOrderMenu()
         {
@@ -298,7 +295,7 @@ namespace AirlineDBMS.ViewModels
                 result.Table.TableName = "Employees";
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
-                ShowMenuItem("ShowQueryDisplay");
+                ShowView(MenuItem.query_display);
             }
             else
             {
@@ -324,7 +321,7 @@ namespace AirlineDBMS.ViewModels
                 result.Table.TableName = "EmployeeSched";
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
-                ShowMenuItem("ShowQueryDisplay");
+                ShowView(MenuItem.query_display);
             }
             else
             {
@@ -350,7 +347,7 @@ namespace AirlineDBMS.ViewModels
                 result.Table.TableName = "Bags";
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
-                ShowMenuItem("ShowQueryDisplay");
+                ShowView(MenuItem.query_display);
             }
             else
             {
@@ -376,7 +373,7 @@ namespace AirlineDBMS.ViewModels
                 result.Table.TableName = "BagClaims";
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
-                ShowMenuItem("ShowQueryDisplay");
+                ShowView(MenuItem.query_display);
             }
             else
             {
@@ -402,7 +399,7 @@ namespace AirlineDBMS.ViewModels
                 result.Table.TableName = "Equipment";
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
-                ShowMenuItem("ShowQueryDisplay");
+                ShowView(MenuItem.query_display);
             }
             else
             {
@@ -428,7 +425,7 @@ namespace AirlineDBMS.ViewModels
                 result.Table.TableName = "WorkOrders";
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
-                ShowMenuItem("ShowQueryDisplay");
+                ShowView(MenuItem.query_display);
             }
             else
             {
@@ -454,7 +451,7 @@ namespace AirlineDBMS.ViewModels
                 result.Table.TableName = "Flights";
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
-                ShowMenuItem("ShowQueryDisplay");
+                ShowView(MenuItem.query_display);
             }
             else
             {
@@ -480,7 +477,7 @@ namespace AirlineDBMS.ViewModels
                 result.Table.TableName = "FuelOrders";
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
-                ShowMenuItem("ShowQueryDisplay");
+                ShowView(MenuItem.query_display);
             }
             else
             {
@@ -568,51 +565,61 @@ namespace AirlineDBMS.ViewModels
             }
         }
 
-        // Show a certain menu when it is clicked
-        private void ShowMenuItem(string open)
+        enum MenuItem {new_bag_claim, new_emp_shift, new_work_order, new_fuel_order, query_display}
+
+        private void SetMenuItem(MenuItem item, Boolean visible)
         {
-            switch (open)
+            Console.WriteLine($"ShowMenuItem({item}, {visible})");
+            Boolean isException = IsException(item);
+            Visibility off = isException ? Visibility.Hidden : Visibility.Collapsed;
+            Visibility on = isException ? Visibility.Hidden : Visibility.Visible;
+            switch (item)
             {
-                case "NewEmployeeShift":
-                    NewBagClaimVisible = Visibility.Collapsed;
-                    EmpShiftVisible = Visibility.Visible;
-                    NewWorkOrderVisible = Visibility.Collapsed;
-                    NewFuelOrderVisible = Visibility.Collapsed;
-                    QueryDisplayVM.Instance.QueryDisplayVisible = Visibility.Collapsed;
+                case MenuItem.new_bag_claim:
+                    NewBagClaimVisible = visible ? on : off;
                     break;
-                case "NewBaggageClaim":
-                    NewBagClaimVisible = Visibility.Visible;
-                    EmpShiftVisible = Visibility.Collapsed;
-                    NewWorkOrderVisible = Visibility.Collapsed;
-                    NewFuelOrderVisible = Visibility.Collapsed;
-                    QueryDisplayVM.Instance.QueryDisplayVisible = Visibility.Collapsed;
+                case MenuItem.new_emp_shift:
+                    EmpShiftVisible = visible ? on : off;
                     break;
-                case "NewWorkOrder":
-                    NewBagClaimVisible = Visibility.Collapsed;
-                    EmpShiftVisible = Visibility.Collapsed;
-                    NewWorkOrderVisible = Visibility.Visible;
-                    NewFuelOrderVisible = Visibility.Collapsed;
-                    QueryDisplayVM.Instance.QueryDisplayVisible = Visibility.Collapsed;
+                case MenuItem.new_fuel_order:
+                    NewFuelOrderVisible = visible ? on : off;
                     break;
-                case "NewFuelOrder":
-                    NewBagClaimVisible = Visibility.Collapsed;
-                    EmpShiftVisible = Visibility.Collapsed;
-                    NewWorkOrderVisible = Visibility.Collapsed;
-                    NewFuelOrderVisible = Visibility.Visible;
-                    QueryDisplayVM.Instance.QueryDisplayVisible = Visibility.Collapsed;
+                case MenuItem.new_work_order:
+                    NewWorkOrderVisible = visible ? on : off;
                     break;
-                case "ShowQueryDisplay":
-                    NewBagClaimVisible = Visibility.Collapsed;
-                    EmpShiftVisible = Visibility.Collapsed;
-                    NewWorkOrderVisible = Visibility.Collapsed;
-                    NewFuelOrderVisible = Visibility.Collapsed;
-                    QueryDisplayVM.Instance.QueryDisplayVisible = Visibility.Visible;
-                    break;
-                default:
+                case MenuItem.query_display:
+                    QueryDisplayVM.Instance.QueryDisplayVisible = visible ? on : off;
                     break;
             }
         }
 
+        private void ShowView(MenuItem item)
+        {
+            SetMenuItem(item, true);
+            foreach (MenuItem topMenuItem in Enum.GetValues(typeof(MenuItem)))
+            {
+                if(topMenuItem != item)
+                {
+                    SetMenuItem(topMenuItem, false);
+                }
+            }
+        }
+        
+        private Boolean IsException(MenuItem view)
+        {
+            User.Group group = User.instance.GetUserGroup();
+            if(group == User.Group.Auditor && view != MenuItem.query_display)
+            {
+                return true;
+            }
+
+            if(group == User.Group.Employee && view == MenuItem.new_emp_shift)
+            {
+                return true;
+            }
+
+            return false;
+        }
         #endregion
     }
 }

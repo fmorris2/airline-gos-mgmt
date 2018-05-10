@@ -58,16 +58,16 @@
                         <Setter Property="TextAlignment" Value="Center" />
                     </Style>
                 </StackPanel.Resources>
-                <Button Command="{Binding AddEmpShiftCommand}">
+                <Button Command="{Binding AddEmpShiftCommand}" Name="addEmpShiftButton">
                     <TextBlock Text="Add Employee Shift" />
                 </Button>
-                <Button Command="{Binding NewBagClaimCommand}" >
+                <Button Command="{Binding NewBagClaimCommand}" Name="addBagClaimButton">
                     <TextBlock Text="New Baggage Claim" />
                 </Button>
-                <Button Command="{Binding NewWorkOrderCommand}">
+                <Button Command="{Binding NewWorkOrderCommand}" Name="addWorkOrderButton">
                     <TextBlock Text="New Work Order" />
                 </Button>
-                <Button Command="{Binding NewFuelOrderCommand}">
+                <Button Command="{Binding NewFuelOrderCommand}" Name="addFuelOrderButton">
                     <TextBlock Text="New Fuel Order" />
                 </Button>
             </StackPanel>

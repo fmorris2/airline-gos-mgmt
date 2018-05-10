@@ -1,4 +1,5 @@
 ﻿using AirlineDBMS.Models;
+using AirlineDBMS.Views;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
@@ -103,6 +104,7 @@ namespace AirlineDBMS.ViewModels
                 {
                     Console.WriteLine("Successful login!");
                     IsLoginVisible = Visibility.Collapsed;
+                    MainWindow.instance.UpdateInterfaceForUserGroup();
                 }
                 else
                 {

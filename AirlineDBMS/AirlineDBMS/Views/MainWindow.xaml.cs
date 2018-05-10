@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 using AirlineDBMS.ViewModels;
+using AirlineDBMS.Models;
 
 namespace AirlineDBMS.Views
 {
@@ -22,10 +23,32 @@ namespace AirlineDBMS.Views
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
+        public static MainWindow instance;
         public MainWindow()
         {
             this.DataContext = MainVM.Instance;
             InitializeComponent();
+            instance = this;
+        }
+
+        public void UpdateInterfaceForUserGroup()
+        {
+            User.Group group = User.instance.GetUserGroup();
+
+            switch (group)
+            {
+                case User.Group.Auditor:
+                    addEmpShiftButton.Visibility = Visibility.Hidden;
+                    addBagClaimButton.Visibility = Visibility.Hidden;
+                    addFuelOrderButton.Visibility = Visibility.Hidden;
+                    addWorkOrderButton.Visibility = Visibility.Hidden;
+                    break;
+                case User.Group.Employee:
+                    addEmpShiftButton.Visibility = Visibility.Hidden;
+                    break;
+                case User.Group.Manager:
+                    break;
+            }
         }
     }
 }
