@@ -289,7 +289,7 @@ namespace AirlineDBMS.ViewModels
         private void ShowEmployees()
         {
             // Get all the table data as a dataview
-            DataView result = DBManager.GetTableData($"SELECT * FROM `employee` LIMIT {qvm.LIMIT}");
+            DataView result = DBManager.GetTableData($"SELECT * FROM `employee` ORDER BY `id` DESC LIMIT {qvm.LIMIT}");
 
             // If we got something toss it in the DataGrid
             if (result != null && result.Count > 0)
@@ -316,7 +316,7 @@ namespace AirlineDBMS.ViewModels
         private void OnEmpSched()
         {
             // Get all the table data as a dataview
-            DataView result = DBManager.GetTableData($"SELECT * FROM `equipment` LIMIT {qvm.LIMIT}");
+            DataView result = DBManager.GetTableData($"SELECT * FROM `employee_shift` ORDER BY `id` DESC LIMIT {qvm.LIMIT}");
 
             // If we got something toss it in the DataGrid
             if(result != null && result.Count > 0)
@@ -342,7 +342,7 @@ namespace AirlineDBMS.ViewModels
         private void ShowBags()
         {
             // Get all the table data as a dataview
-            DataView result = DBManager.GetTableData($"SELECT * FROM `bag` LIMIT {qvm.LIMIT}");
+            DataView result = DBManager.GetTableData($"SELECT * FROM `bag` ORDER BY `id` DESC LIMIT {qvm.LIMIT}");
 
             // If we got something toss it in the DataGrid
             if (result != null && result.Count > 0)
@@ -368,7 +368,7 @@ namespace AirlineDBMS.ViewModels
         private void ShowBagClaim()
         {
             // Get all the table data as a dataview
-            DataView result = DBManager.GetTableData($"SELECT * FROM `baggage_claim` LIMIT {qvm.LIMIT}");
+            DataView result = DBManager.GetTableData($"SELECT * FROM `baggage_claim` ORDER BY `id` DESC LIMIT {qvm.LIMIT}");
 
             // If we got something toss it in the DataGrid
             if (result != null && result.Count > 0)
@@ -394,7 +394,7 @@ namespace AirlineDBMS.ViewModels
         private void ShowEquipment()
         {
             // Get all the table data as a dataview
-            DataView result = DBManager.GetTableData($"SELECT * FROM `equipment` LIMIT {qvm.LIMIT}");
+            DataView result = DBManager.GetTableData($"SELECT * FROM `equipment` ORDER BY `id` DESC LIMIT {qvm.LIMIT}");
 
             // If we got something toss it in the DataGrid
             if (result != null && result.Count > 0)
@@ -420,7 +420,7 @@ namespace AirlineDBMS.ViewModels
         private void ShowWorkOrders()
         {
             // Get all the table data as a dataview
-            DataView result = DBManager.GetTableData($"SELECT * FROM `work_order` LIMIT {qvm.LIMIT}");
+            DataView result = DBManager.GetTableData($"SELECT * FROM `work_order` ORDER BY `id` DESC LIMIT {qvm.LIMIT}");
 
             // If we got something toss it in the DataGrid
             if (result != null && result.Count > 0)
@@ -446,7 +446,7 @@ namespace AirlineDBMS.ViewModels
         private void ShowFlights()
         {
             // Get all the table data as a dataview
-            DataView result = DBManager.GetTableData($"SELECT * FROM `flight` LIMIT {qvm.LIMIT}");
+            DataView result = DBManager.GetTableData($"SELECT * FROM `flight` ORDER BY `id` DESC LIMIT {qvm.LIMIT}");
 
             // If we got something toss it in the DataGrid
             if (result != null && result.Count > 0)
@@ -472,7 +472,7 @@ namespace AirlineDBMS.ViewModels
         private void ShowFuelOrders()
         {
             // Get all the table data as a dataview
-            DataView result = DBManager.GetTableData($"SELECT * FROM `fuel_order` LIMIT {qvm.LIMIT}");
+            DataView result = DBManager.GetTableData($"SELECT * FROM `fuel_order` ORDER BY `id` DESC LIMIT {qvm.LIMIT}");
 
             // If we got something toss it in the DataGrid
             if (result != null && result.Count > 0)

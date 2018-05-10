@@ -94,8 +94,6 @@ namespace AirlineDBMS.Views
             {
                 ViewModels.MainVM.Instance.AddMessage("Failed to create fuel order for flight ID " + flight_id + ": Internal error");
             }
-
-            
         }
 
         private Boolean FlightExists(int flight_id)
