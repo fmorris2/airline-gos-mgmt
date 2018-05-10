@@ -42,7 +42,7 @@
         <Label Grid.Row="3" Grid.Column="0" Margin="5" HorizontalAlignment="Right"
                FontSize="12" Foreground="Gray">Amount (gal.):</Label>
         <xtk:IntegerUpDown Name="amountSpinner" Grid.Row="3" Grid.Column="1" Margin="5" HorizontalAlignment="Left"
-                 Minimum="0" Maximum="200" Increment="5" Width="50" Text="{Binding Amount}" DefaultValue="1" DisplayDefaultValueOnEmptyText="True" />
+                 Minimum="0" Maximum="200" Increment="5" Width="50" Text="{Binding Amount}" DefaultValue="5" DisplayDefaultValueOnEmptyText="True" />
 
         <Button Grid.Row="5" Grid.Column="1" Margin="5" Width="100" HorizontalAlignment="Right"
                 Click="Submit_Click">Submit</Button>

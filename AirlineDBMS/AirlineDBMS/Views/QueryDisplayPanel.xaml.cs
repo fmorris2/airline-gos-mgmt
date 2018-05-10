@@ -24,6 +24,42 @@ namespace AirlineDBMS.Views
             this.DataContext = ViewModels.QueryDisplayVM.Instance;
             InitializeComponent();
         }
-        
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            // use the table name of the current data set to figure out what we need to refresh
+            ViewModels.QueryDisplayVM qvm = ViewModels.QueryDisplayVM.Instance;
+            ViewModels.MainVM mainvm = ViewModels.MainVM.Instance;
+            string t = qvm.QueryDisplayItemsSource.Table.TableName;
+            switch (t)
+            {
+                case "Employees":
+                    mainvm.EmployeesCommand.Execute();
+                    break;
+                case "EmployeeSched":
+                    mainvm.EmployeeSchedCommand.Execute();
+                    break;
+                case "Bags":
+                    mainvm.BagsCommand.Execute();
+                    break;
+                case "BagClaims":
+                    mainvm.BagClaimsCommand.Execute();
+                    break;
+                case "Equipment":
+                    mainvm.EquipmentCommand.Execute();
+                    break;
+                case "WorkOrders":
+                    mainvm.WorkOrdersCommand.Execute();
+                    break;
+                case "Flights":
+                    mainvm.FlightsCommand.Execute();
+                    break;
+                case "FuelOrders":
+                    mainvm.FuelOrdersCommand.Execute();
+                    break;
+                default:
+                    break;
+            }
+            }
+        }
     }
-}

@@ -20,6 +20,7 @@ namespace AirlineDBMS.ViewModels
         private static object statusObj = new object();
         private static volatile MainVM instance;
         private MySqlDataAdapter mySqlDataAdapter;
+        QueryDisplayVM qvm = QueryDisplayVM.Instance;
 
         #region Constructor/Instance
         public static MainVM Instance
@@ -288,11 +289,13 @@ namespace AirlineDBMS.ViewModels
         private void ShowEmployees()
         {
             // Get all the table data as a dataview
-            DataView result = DBManager.GetTableData("SELECT * FROM `employee` LIMIT 100");
+            DataView result = DBManager.GetTableData($"SELECT * FROM `employee` LIMIT {qvm.LIMIT}");
 
             // If we got something toss it in the DataGrid
             if (result != null && result.Count > 0)
             {
+                // Set table name for reg=fresh button in querydisplaypanel.xaml
+                result.Table.TableName = "Employees";
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
                 ShowMenuItem("ShowQueryDisplay");
@@ -313,11 +316,12 @@ namespace AirlineDBMS.ViewModels
         private void OnEmpSched()
         {
             // Get all the table data as a dataview
-            DataView result = DBManager.GetTableData("SELECT * FROM `equipment` LIMIT 100");
+            DataView result = DBManager.GetTableData($"SELECT * FROM `equipment` LIMIT {qvm.LIMIT}");
 
             // If we got something toss it in the DataGrid
             if(result != null && result.Count > 0)
             {
+                result.Table.TableName = "EmployeeSched";
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
                 ShowMenuItem("ShowQueryDisplay");
@@ -338,11 +342,12 @@ namespace AirlineDBMS.ViewModels
         private void ShowBags()
         {
             // Get all the table data as a dataview
-            DataView result = DBManager.GetTableData("SELECT * FROM `bag` LIMIT 100");
+            DataView result = DBManager.GetTableData($"SELECT * FROM `bag` LIMIT {qvm.LIMIT}");
 
             // If we got something toss it in the DataGrid
             if (result != null && result.Count > 0)
             {
+                result.Table.TableName = "Bags";
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
                 ShowMenuItem("ShowQueryDisplay");
@@ -363,11 +368,12 @@ namespace AirlineDBMS.ViewModels
         private void ShowBagClaim()
         {
             // Get all the table data as a dataview
-            DataView result = DBManager.GetTableData("SELECT * FROM `baggage_claim` LIMIT 100");
+            DataView result = DBManager.GetTableData($"SELECT * FROM `baggage_claim` LIMIT {qvm.LIMIT}");
 
             // If we got something toss it in the DataGrid
             if (result != null && result.Count > 0)
             {
+                result.Table.TableName = "BagClaims";
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
                 ShowMenuItem("ShowQueryDisplay");
@@ -388,11 +394,12 @@ namespace AirlineDBMS.ViewModels
         private void ShowEquipment()
         {
             // Get all the table data as a dataview
-            DataView result = DBManager.GetTableData("SELECT * FROM `equipment` LIMIT 100");
+            DataView result = DBManager.GetTableData($"SELECT * FROM `equipment` LIMIT {qvm.LIMIT}");
 
             // If we got something toss it in the DataGrid
             if (result != null && result.Count > 0)
             {
+                result.Table.TableName = "Equipment";
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
                 ShowMenuItem("ShowQueryDisplay");
@@ -413,11 +420,12 @@ namespace AirlineDBMS.ViewModels
         private void ShowWorkOrders()
         {
             // Get all the table data as a dataview
-            DataView result = DBManager.GetTableData("SELECT * FROM `work_order` LIMIT 100");
+            DataView result = DBManager.GetTableData($"SELECT * FROM `work_order` LIMIT {qvm.LIMIT}");
 
             // If we got something toss it in the DataGrid
             if (result != null && result.Count > 0)
             {
+                result.Table.TableName = "WorkOrders";
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
                 ShowMenuItem("ShowQueryDisplay");
@@ -438,11 +446,12 @@ namespace AirlineDBMS.ViewModels
         private void ShowFlights()
         {
             // Get all the table data as a dataview
-            DataView result = DBManager.GetTableData("SELECT * FROM `flight` LIMIT 100");
+            DataView result = DBManager.GetTableData($"SELECT * FROM `flight` LIMIT {qvm.LIMIT}");
 
             // If we got something toss it in the DataGrid
             if (result != null && result.Count > 0)
             {
+                result.Table.TableName = "Flights";
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
                 ShowMenuItem("ShowQueryDisplay");
@@ -463,11 +472,12 @@ namespace AirlineDBMS.ViewModels
         private void ShowFuelOrders()
         {
             // Get all the table data as a dataview
-            DataView result = DBManager.GetTableData("SELECT * FROM `fuel_order` LIMIT 100");
+            DataView result = DBManager.GetTableData($"SELECT * FROM `fuel_order` LIMIT {qvm.LIMIT}");
 
             // If we got something toss it in the DataGrid
             if (result != null && result.Count > 0)
             {
+                result.Table.TableName = "FuelOrders";
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
                 ShowMenuItem("ShowQueryDisplay");

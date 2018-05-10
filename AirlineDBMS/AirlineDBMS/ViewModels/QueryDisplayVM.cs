@@ -85,6 +85,21 @@ namespace AirlineDBMS.ViewModels
             }
         }
 
+        // How many results to limit the table displays too
+        private int limit = 100;
+        public int LIMIT
+        {
+            get { return limit; }
+            set
+            {
+                if (limit != value)
+                {
+                    limit = value;
+                    NotifyPropertyChanged("LIMIT");
+                }
+            }
+        }
+
         #endregion
 
     }
