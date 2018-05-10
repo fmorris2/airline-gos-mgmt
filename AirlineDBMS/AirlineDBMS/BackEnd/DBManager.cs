@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace AirlineDBMS.BackEnd
@@ -44,34 +45,54 @@ namespace AirlineDBMS.BackEnd
          */
         public static MySqlDataReader Query(String sql)
         {
-            if(connection == null)
-            {
-                connection = new MySqlConnection(CONN_STRING);
-                connection.Open();
-            }
+            MySqlDataReader output = null;
 
-            Console.WriteLine("DBManager#query("+sql+")");
-            MySqlCommand command = new MySqlCommand(sql, connection);
-            return command.ExecuteReader();
+            try
+            {
+                if (connection == null)
+                {
+                    connection = new MySqlConnection(CONN_STRING);
+                    connection.Open();
+                }
+
+                Console.WriteLine("DBManager#query(" + sql + ")");
+                MySqlCommand command = new MySqlCommand(sql, connection);
+                output = command.ExecuteReader();
+
+            }
+            catch (Exception e) { Console.WriteLine(e.StackTrace);}
+
+            return output;
         }
 
         // For displaying table data
         public static DataView GetTableData(String sql)
         {
-            if (connection == null)
+            DataView output = null;
+            try
             {
-                connection = new MySqlConnection(CONN_STRING);
-                connection.Open();
+                if (connection == null)
+                {
+                    connection = new MySqlConnection(CONN_STRING);
+                    connection.Open();
+                }
+
+                DataTable dt = new DataTable();
+
+                using (MySqlCommand cmdSel = new MySqlCommand(sql, connection))
+                using (MySqlDataAdapter da = new MySqlDataAdapter(cmdSel))
+                    da.Fill(dt);
+
+                output = dt.DefaultView;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
             }
 
-            DataTable dt = new DataTable();
 
-            using (MySqlCommand cmdSel = new MySqlCommand(sql, connection))
-            using (MySqlDataAdapter da = new MySqlDataAdapter(cmdSel))
-                da.Fill(dt);
- 
-
-            return dt.DefaultView;
+            return output;
         }
     }
 }

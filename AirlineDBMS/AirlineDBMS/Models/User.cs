@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace AirlineDBMS.Models
@@ -35,10 +36,18 @@ namespace AirlineDBMS.Models
 
         public static User Load(string username, string password)
         {
+            // sanitize db input
+            username = Regex.Replace(username, @"[\r\n\x00\x1a\\'`""]", @"\$0");
+            // sanitize db input
+            password = Regex.Replace(password, @"[\r\n\x00\x1a\\'`""]", @"\$0");
+
             User toReturn = null;
 
             MySqlDataReader result = DBManager.Query("SELECT * FROM `user` WHERE LOWER(`username`)='" + username.ToLower() 
                 + "' AND LOWER(`password`)='" + password.ToLower() + "'");
+
+            if (result == null) return null;
+
             if (result.Read())
             {
                 toReturn = new User(result.GetInt32("id"), result.GetInt16("user_group"), result.GetString("username"), result.GetString("password"));

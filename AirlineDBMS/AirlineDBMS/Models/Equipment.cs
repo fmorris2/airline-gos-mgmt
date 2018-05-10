@@ -26,13 +26,18 @@ namespace AirlineDBMS.Models
         public static void LoadEquipment()
         {
             MySqlDataReader result = DBManager.Query("SELECT * FROM `equipment`");
+            if (result == null) return;
             loadedEquipment = new List<Equipment>();
 
-            while(result.Read())
+            try
             {
-                Equipment loaded = new Equipment(result.GetInt32("id"), result.GetString("name"), result.GetString("status"));
-                loadedEquipment.Add(loaded);
-            }
+                while (result.Read())
+                {
+                    Equipment loaded = new Equipment(result.GetInt32("id"), result.GetString("name"), result.GetString("status"));
+                    loadedEquipment.Add(loaded);
+                }
+            } catch (Exception e) { Console.WriteLine(e.StackTrace); }
+            
 
             result.Close();
             Console.WriteLine("Loaded " + loadedEquipment.Count + " pieces of equipment");

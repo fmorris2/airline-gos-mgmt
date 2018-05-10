@@ -87,6 +87,7 @@ namespace AirlineDBMS.Views
         private Boolean BagExists(int bag_id)
         {
             MySqlDataReader reader = DBManager.Query("SELECT `id` FROM `bag` WHERE `id`=" + bag_id);
+            if (reader == null) return false;
             Boolean bag_exists = reader.HasRows;
             reader.Close();
             return bag_exists;
@@ -95,6 +96,7 @@ namespace AirlineDBMS.Views
         private Boolean ClaimAlreadyExists(int bag_id)
         {
             MySqlDataReader reader = DBManager.Query("SELECT `id` FROM `baggage_claim` WHERE `bag_id`=" + bag_id);
+            if (reader == null) return false;
             Boolean claim_exists = reader.HasRows;
             reader.Close();
             return claim_exists;
@@ -108,18 +110,18 @@ namespace AirlineDBMS.Views
             MySqlDataReader result = DBManager.Query("INSERT INTO `baggage_claim`(bag_id,request_date,delivery_method,current_status)" +
                 " VALUES(" + bag_id + ",'" + formattedDateTime + "','" + deliv_method.ToString() + "',"
                     + "'waiting')");
-
-            if (result.RecordsAffected > 0)
+            
+            if (result != null && result.RecordsAffected > 0)
             {
                 ViewModels.MainVM.Instance.AddMessage("Successfully created baggage claim for bag ID " + bag_id 
                     + ", delivered by " + deliv_method.ToString());
+
+                result.Close();
             }
             else
             {
                 ViewModels.MainVM.Instance.AddMessage("Failed to create baggage claim for bag ID " + bag_id + ": Internal error");
             }
-
-            result.Close();
 
         }
     }

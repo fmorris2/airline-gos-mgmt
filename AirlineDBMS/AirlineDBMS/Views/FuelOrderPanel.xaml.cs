@@ -83,22 +83,25 @@ namespace AirlineDBMS.Views
             MySqlDataReader result = DBManager.Query("INSERT INTO `fuel_order`(flight_id,type,amount_gallons)" +
                 " VALUES(" + flight_id + ",'" + fTypeBox.SelectedValue + "'," + amountSpinner.Value + ")");
 
-            if (result.RecordsAffected > 0)
+            if (result != null && result.RecordsAffected > 0)
             {
                 ViewModels.MainVM.Instance.AddMessage("Successfully created fuel order for flight ID " + flight_id
                     + ": " + amountSpinner.Value + " gallons of " + fTypeBox.SelectedValue);
+
+                result.Close();
             }
             else
             {
                 ViewModels.MainVM.Instance.AddMessage("Failed to create fuel order for flight ID " + flight_id + ": Internal error");
             }
 
-            result.Close();
+            
         }
 
         private Boolean FlightExists(int flight_id)
         {
             MySqlDataReader reader = DBManager.Query("SELECT `id` FROM `flight` WHERE `id`=" + flight_id);
+            if (reader == null) return false;
             Boolean flight_exists = reader.HasRows;
             reader.Close();
             return flight_exists;

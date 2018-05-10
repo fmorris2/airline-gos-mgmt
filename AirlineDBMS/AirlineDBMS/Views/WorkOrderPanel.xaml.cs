@@ -2,6 +2,7 @@
 using AirlineDBMS.Models;
 using MySql.Data.MySqlClient;
 using System;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -41,23 +42,26 @@ namespace AirlineDBMS.Views
 
         private void InsertWorkOrderIntoDB(Equipment selected_equipment, String issue_desc)
         {
+            // sanitize db input
+            issue_desc = Regex.Replace(issue_desc, @"[\r\n\x00\x1a\\'`""]", @"\$0");
+
             DateTime today = DateTime.Today;
             String formattedDateTime = today.ToString("yyyyMMdd");
 
             MySqlDataReader result = DBManager.Query("INSERT INTO `work_order`(equipment_id,issue_desc,request_date)" +
                 " VALUES(" + selected_equipment.GetId() + ",'" + issue_desc + "','" + formattedDateTime + "')");
 
-            if (result.RecordsAffected > 0)
+            if (result != null && result.RecordsAffected > 0)
             {
                 ViewModels.MainVM.Instance.AddMessage("Successfully created work order for " + cbEquipment.Text + ": "
                     + "\"" + issue_desc + "\"");
+
+                result.Close();
             }
             else
             {
                 ViewModels.MainVM.Instance.AddMessage("Failed to create work order for " + cbEquipment.Text + ": Internal error");
             }
-
-            result.Close();
         }
     }
 }
