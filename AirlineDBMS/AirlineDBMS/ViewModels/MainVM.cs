@@ -509,12 +509,15 @@ namespace AirlineDBMS.ViewModels
             {
                 case User.Group.Auditor:
                     User.LoadInstance("employee", "test");
+                    AddMessage("Switched user-group to Employee");
                     break;
                 case User.Group.Employee:
                     User.LoadInstance("manager", "test");
+                    AddMessage("Switched user-group to Manager");
                     break;
                 case User.Group.Manager:
                     User.LoadInstance("auditor", "test");
+                    AddMessage("Switched user-group to Auditor");
                     break;
             }
             MainWindow.instance.UpdateInterfaceForUserGroup();
