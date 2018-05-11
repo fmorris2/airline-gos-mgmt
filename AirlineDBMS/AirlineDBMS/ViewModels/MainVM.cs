@@ -1,5 +1,6 @@
 ﻿using AirlineDBMS.BackEnd;
 using AirlineDBMS.Models;
+using AirlineDBMS.Views;
 using MySql.Data.MySqlClient;
 using Prism.Commands;
 using System;
@@ -38,6 +39,7 @@ namespace AirlineDBMS.ViewModels
         public MainVM()
         {
             RegisterCommands();
+            SwitchUserGroup = new DelegateCommand(ExecuteSwitchUserGroup, CanSwitchUserGroup);
         }
 
         private void RegisterCommands()
@@ -146,6 +148,7 @@ namespace AirlineDBMS.ViewModels
         #endregion
 
         #region Commands
+        public DelegateCommand SwitchUserGroup { get; private set; }
 
         #region TopButtons
         // Employee Shift menu button select
@@ -495,6 +498,29 @@ namespace AirlineDBMS.ViewModels
 
         #region HelperMethods
 
+        Boolean CanSwitchUserGroup()
+        {
+            return true;
+        }
+
+        void ExecuteSwitchUserGroup()
+        {
+            switch(User.instance.GetUserGroup())
+            {
+                case User.Group.Auditor:
+                    User.LoadInstance("employee", "test");
+                    break;
+                case User.Group.Employee:
+                    User.LoadInstance("manager", "test");
+                    break;
+                case User.Group.Manager:
+                    User.LoadInstance("auditor", "test");
+                    break;
+            }
+            MainWindow.instance.UpdateInterfaceForUserGroup();
+            ShowView(MenuItem.none);
+        }
+
         // Add to the status box
         public void AddMessage(string msg)
         {
@@ -565,7 +591,7 @@ namespace AirlineDBMS.ViewModels
             }
         }
 
-        public enum MenuItem {new_bag_claim, new_emp_shift, new_work_order, new_fuel_order, query_display}
+        public enum MenuItem {new_bag_claim, new_emp_shift, new_work_order, new_fuel_order, query_display, none}
 
         private void SetMenuItem(MenuItem item, Boolean visible)
         {

@@ -10,6 +10,10 @@
         Height="750" Width="1300"
         Title="AirlineDBMS">
 
+    <Control.InputBindings>
+        <KeyBinding Key="F2" Command="{Binding SwitchUserGroup}" />
+    </Control.InputBindings>
+
     <controls:MetroWindow.Resources>
         <DataTemplate x:Key="FlyoutHeaderTemplate">
             <TextBlock FontSize="20" FontWeight="Bold" HorizontalAlignment="Left">Status Messages</TextBlock>

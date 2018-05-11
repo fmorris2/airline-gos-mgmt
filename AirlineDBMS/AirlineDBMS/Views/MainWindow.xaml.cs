@@ -45,8 +45,15 @@ namespace AirlineDBMS.Views
                     break;
                 case User.Group.Employee:
                     addEmpShiftButton.Visibility = Visibility.Hidden;
+                    addBagClaimButton.Visibility = Visibility.Visible;
+                    addFuelOrderButton.Visibility = Visibility.Visible;
+                    addWorkOrderButton.Visibility = Visibility.Visible;
                     break;
                 case User.Group.Manager:
+                    addBagClaimButton.Visibility = Visibility.Visible;
+                    addFuelOrderButton.Visibility = Visibility.Visible;
+                    addWorkOrderButton.Visibility = Visibility.Visible;
+                    addEmpShiftButton.Visibility = Visibility.Visible;
                     break;
             }
         }
