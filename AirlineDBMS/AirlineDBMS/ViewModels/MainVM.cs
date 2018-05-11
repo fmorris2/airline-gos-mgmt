@@ -16,7 +16,6 @@ namespace AirlineDBMS.ViewModels
         private static object lockObj = new object();
         private static object statusObj = new object();
         private static volatile MainVM instance;
-        private MySqlDataAdapter mySqlDataAdapter;
         QueryDisplayVM qvm = QueryDisplayVM.Instance;
 
         #region Constructor/Instance
@@ -286,12 +285,12 @@ namespace AirlineDBMS.ViewModels
         private void ShowEmployees()
         {
             // Get all the table data as a dataview
-            DataView result = DBManager.GetTableData($"SELECT * FROM `employee` ORDER BY `id` DESC LIMIT {qvm.LIMIT}");
+            DataView result = DBManager.GetTableData($"SELECT * FROM `employee` ORDER BY `employment_start` DESC LIMIT {qvm.LIMIT}");
 
             // If we got something toss it in the DataGrid
             if (result != null && result.Count > 0)
             {
-                // Set table name for reg=fresh button in querydisplaypanel.xaml
+                // Set table name for refresh button in querydisplaypanel.xaml
                 result.Table.TableName = "Employees";
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = null;
                 QueryDisplayVM.Instance.QueryDisplayItemsSource = result;
@@ -313,7 +312,7 @@ namespace AirlineDBMS.ViewModels
         private void OnEmpSched()
         {
             // Get all the table data as a dataview
-            DataView result = DBManager.GetTableData($"SELECT * FROM `employee_shift` ORDER BY `id` DESC LIMIT {qvm.LIMIT}");
+            DataView result = DBManager.GetTableData($"SELECT * FROM `employee_shift` ORDER BY `date` DESC LIMIT {qvm.LIMIT}");
 
             // If we got something toss it in the DataGrid
             if(result != null && result.Count > 0)
@@ -365,7 +364,7 @@ namespace AirlineDBMS.ViewModels
         private void ShowBagClaim()
         {
             // Get all the table data as a dataview
-            DataView result = DBManager.GetTableData($"SELECT * FROM `baggage_claim` ORDER BY `id` DESC LIMIT {qvm.LIMIT}");
+            DataView result = DBManager.GetTableData($"SELECT * FROM `baggage_claim` ORDER BY `request_date` DESC LIMIT {qvm.LIMIT}");
 
             // If we got something toss it in the DataGrid
             if (result != null && result.Count > 0)
@@ -417,7 +416,7 @@ namespace AirlineDBMS.ViewModels
         private void ShowWorkOrders()
         {
             // Get all the table data as a dataview
-            DataView result = DBManager.GetTableData($"SELECT * FROM `work_order` ORDER BY `id` DESC LIMIT {qvm.LIMIT}");
+            DataView result = DBManager.GetTableData($"SELECT * FROM `work_order` ORDER BY `request_date` DESC LIMIT {qvm.LIMIT}");
 
             // If we got something toss it in the DataGrid
             if (result != null && result.Count > 0)
@@ -443,7 +442,7 @@ namespace AirlineDBMS.ViewModels
         private void ShowFlights()
         {
             // Get all the table data as a dataview
-            DataView result = DBManager.GetTableData($"SELECT * FROM `flight` ORDER BY `id` DESC LIMIT {qvm.LIMIT}");
+            DataView result = DBManager.GetTableData($"SELECT * FROM `flight` ORDER BY `scheduled_departure` DESC LIMIT {qvm.LIMIT}");
 
             // If we got something toss it in the DataGrid
             if (result != null && result.Count > 0)
@@ -490,6 +489,7 @@ namespace AirlineDBMS.ViewModels
         }
 
         #endregion
+
 
         #endregion
 
@@ -558,14 +558,14 @@ namespace AirlineDBMS.ViewModels
             MainVM.Instance.OpenFlyout = true;
 
             int currentStatus = StatusId;
-            System.Threading.Thread.Sleep(3000);
+            System.Threading.Thread.Sleep(8000);
             if (currentStatus == StatusId && !ManuallyOpened)
             {
                 MainVM.Instance.OpenFlyout = false;
             }
         }
 
-        enum MenuItem {new_bag_claim, new_emp_shift, new_work_order, new_fuel_order, query_display}
+        public enum MenuItem {new_bag_claim, new_emp_shift, new_work_order, new_fuel_order, query_display}
 
         private void SetMenuItem(MenuItem item, Boolean visible)
         {
@@ -593,7 +593,7 @@ namespace AirlineDBMS.ViewModels
             }
         }
 
-        private void ShowView(MenuItem item)
+        public void ShowView(MenuItem item)
         {
             SetMenuItem(item, true);
             foreach (MenuItem topMenuItem in Enum.GetValues(typeof(MenuItem)))

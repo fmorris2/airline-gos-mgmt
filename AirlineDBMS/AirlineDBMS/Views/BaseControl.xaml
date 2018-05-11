@@ -28,11 +28,11 @@
     <Grid>
 
         <!-- Panel Types -->
-        <src:EmployeeShiftPanel Visibility="{Binding EmpShiftVisible}" Margin="5" />
-        <src:BaggageClaimPanel Visibility="{Binding NewBagClaimVisible}" Margin="5" />
-        <src:WorkOrderPanel Visibility="{Binding NewWorkOrderVisible}" Margin="5" />
-        <src:FuelOrderPanel Visibility="{Binding NewFuelOrderVisible}" Margin="5" />
-        <src:QueryDisplayPanel Visibility="{Binding QueryDisplayVisible}" Margin="5" />
+        <src:EmployeeShiftPanel Visibility="{Binding EmpShiftVisible}" Margin="5" HorizontalAlignment="Left"/>
+        <src:BaggageClaimPanel Visibility="{Binding NewBagClaimVisible}" Margin="5" HorizontalAlignment="Left" />
+        <src:WorkOrderPanel Visibility="{Binding NewWorkOrderVisible}" Margin="5" HorizontalAlignment="Left" />
+        <src:FuelOrderPanel Visibility="{Binding NewFuelOrderVisible}" Margin="5" HorizontalAlignment="Left" />
+        <src:QueryDisplayPanel Visibility="{Binding QueryDisplayVisible}" Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
 
     </Grid>
 </UserControl>

@@ -57,6 +57,18 @@ namespace AirlineDBMS.Views
                 case "FuelOrders":
                     mainvm.FuelOrdersCommand.Execute();
                     break;
+                case "LargeFuelOrders":
+                    qvm.LargeFuelOrders();
+                    break;
+                case "JuneEmployees":
+                    qvm.JuneEmployees();
+                    break;
+                case "BagsInTransit":
+                    qvm.BagsInTransit();
+                    break;
+                case "UnoperationalEqp":
+                    qvm.UnoperationalEqp();
+                    break;
                 default:
                     break;
             }
